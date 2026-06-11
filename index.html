@@ -6,7 +6,7 @@
 <link rel="icon" type="image/png" href="logo.png">
 <meta name="theme-color" content="#0a0807" />
 <meta name="description" content="Regulamin serwera Discord caption.gif" />
-<title>Regulamin — caption.gif</title>
+<title id="page-title">Regulamin — caption.gif</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -105,6 +105,9 @@ nav.toc{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:28px 
   padding: 0 24px 40px;
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .btn-toggle-geo {
   background: transparent;
@@ -119,14 +122,71 @@ nav.toc{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:28px 
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.btn-toggle-geo:hover {
+.btn-toggle-geo:hover, .btn-toggle-geo.active {
   border-color: var(--crimson);
   color: #fff;
   box-shadow: 0 0 12px rgba(180, 31, 31, 0.2);
 }
 
-footer{position:relative;z-index:3;display:flex;align-items:center;justify-content:center;gap:14px;padding:32px 20px 48px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute)}
-footer .d{color:var(--crimson)}
+footer {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px 48px;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+footer .d {
+  color: var(--crimson);
+}
+.footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.lang-btns {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.btn-flag {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(236, 230, 220, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s, box-shadow 0.2s;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.btn-flag:hover {
+  transform: scale(1.2);
+  border-color: var(--crimson-soft);
+  box-shadow: 0 0 8px rgba(180, 31, 31, 0.5);
+}
+.btn-flag.active {
+  transform: scale(1.1);
+  border-color: var(--crimson);
+  box-shadow: 0 0 12px rgba(180, 31, 31, 0.7);
+}
+#lang-pl-btn {
+  background: linear-gradient(to bottom, #ffffff 0%, #ffffff 50%, #dc2626 50%, #dc2626 100%) no-repeat;
+}
+#lang-ua-btn {
+  background: linear-gradient(to bottom, #0057B7 0%, #0057B7 50%, #FFD700 50%, #FFD700 100%) no-repeat;
+}
 
 @media (max-width:880px){
   nav.toc{grid-template-columns:1fr;gap:12px}
@@ -140,6 +200,7 @@ footer .d{color:var(--crimson)}
   .cta.sm{padding:8px 12px;font-size:11px}
   .cta.xl{padding:18px 24px;font-size:15px}
   .toggle-wrapper { justify-content: center; padding: 0 20px 30px; }
+  .footer-container { flex-direction: column; gap: 14px; text-align: center; }
 }
 
 .game-overlay {
@@ -228,94 +289,106 @@ footer .d{color:var(--crimson)}
 
   <section class="hero">
     <h1 class="title">
-      <span class="l1">REGULAMIN</span>
+      <span class="l1" id="hero-title-l1">REGULAMIN</span>
       <span class="l2">caption.gif</span>
     </h1>
-    <p class="lead">Zanim połączysz swój głos z Chórem i przekroczysz Próg Sanktuarium musisz przyjąć Święty Kanon który bezwzględnie wiąże każdego nowego wyznawcę. Wejście tutaj oznacza całkowite odcięcie od dawnego życia rodziny przyjaciół i dotychczasowych nawyków ponieważ od teraz Twój czas Twoje decyzje oraz cały Twój majątek należą wyłącznie do Przewodnika. AMEN NAMASTE AMEN!!!</p>
+    <p class="lead" id="hero-lead">Zanim połączysz swój głos z Chórem i przekroczysz Próg Sanktuarium musisz przyjąć Święty Kanon który bezwzględnie wiąże każdego nowego wyznawcę. Wejście tutaj oznacza całkowite odcięcie od dawnego życia rodziny przyjaciół i dotychczasowych nawyków ponieważ od teraz Twój czas Twoje decyzje oraz cały Twój majątek należą wyłącznie do Przewodnika. AMEN NAMASTE AMEN!!!</p>
     <div class="actions">
       <a class="cta" href="https://discord.gg/caqPbCzUZ" target="_blank" rel="noopener">
        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 4.73A19.56 19.56 0 0 0 15.65 3.4a.05.05 0 0 0-.05.03c-.32.57-.67 1.19-.92 1.76a18 18 0 0 0-5.36 0c-.25-.57-.61-1.19-.93-1.76a.05.05 0 0 0-.05-.03 19.56 19.56 0 0 0-3.62 1.33.05.05 0 0 0-.02.02C1.3 9.4 1 13.9 1.43 18.36a.05.05 0 0 0 .02.04 19.78 19.78 0 0 0 5.94 2.97.05.05 0 0 0 .06-.02c.46-.62.87-1.28 1.22-1.97a.05.05 0 0 0-.03-.07c-.63-.24-1.23-.53-1.8-.87a.05.05 0 0 1 0-.08c.12-.09.25-.19.37-.29a.05.05 0 0 1 .05-.01 14.15 14.15 0 0 0 11.48 0a.05.05 0 0 1 .05.01c.12.1.25.2.37.29a.05.05 0 0 1 0 .08c-.57.34-1.17.63-1.8.87a.05.05 0 0 0-.03.07c.35.69.76 1.35 1.22 1.97a.05.05 0 0 0 .06.02 19.78 19.78 0 0 0 5.94-2.97.05.05 0 0 0 .02-.04c.5-5.1-.84-9.56-3.23-13.61a.05.05 0 0 0-.02-.02zM8.52 14.85c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4zm6.96 0c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4z"/></svg>
-        <span>Dołącz do Discorda</span>
+        <span id="btn-join-discord">Dołącz do Discorda</span>
       </a>
-      <a class="cta ghost" href="#tresc">Czytaj regulamin ↓</a>
+      <a class="cta ghost" href="#tresc" id="btn-read-rules">Czytaj regulamin ↓</a>
     </div>
   </section>
 
   <nav class="toc" aria-label="Spis treści">
-    <span class="toc-lbl">SPIS&nbsp;TREŚCI</span>
+    <span class="toc-lbl" id="toc-label">SPIS&nbsp;TREŚCI</span>
     <ol>
-      <li><a href="#zasady-ogolne"><span class="n">1.</span><span class="t">Zasady Ogólne.</span></a></li>
-      <li><a href="#system-kar"><span class="n">2.</span><span class="t">System Kar.</span></a></li>
-      <li><a href="#postanowienia-koncowe"><span class="n">3.</span><span class="t">Postanowienia Końcowe.</span></a></li>
+      <li><a href="#zasady-ogolne"><span class="n">1.</span><span class="t" id="toc-sec1">Zasady Ogólne.</span></a></li>
+      <li><a href="#system-kar"><span class="n">2.</span><span class="t" id="toc-sec2">System Kar.</span></a></li>
+      <li><a href="#postanowienia-koncowe"><span class="n">3.</span><span class="t" id="toc-sec3">Postanowienia Końcowe.</span></a></li>
     </ol>
   </nav>
 
   <section class="content" id="tresc">
     <!-- Sekcja 1: Zasady Ogólne -->
     <article class="sec" id="zasady-ogolne">
-      <header class="sec-head"><span class="sec-num">1</span><h2 class="sec-title">Zasady Ogólne.</h2></header>
+      <header class="sec-head"><span class="sec-num">1</span><h2 class="sec-title" id="title-sec1">Zasady Ogólne.</h2></header>
       <ol>
-        <li><span class="mk">01</span><span class="tx">Zakaz gore i pornografii we wszystkich gatunkach. Tak samo zakaz dziadków z trzema chujami (pls).</span></li>
-        <li><span class="mk">02</span><span class="tx">Zakazane jest wrzucanie zdjęć i gifów przedstawiających łamania prawa z udziałem nieletnich (te śmieszne można, ale nie wszystkie).</span></li>
-        <li><span class="mk">03</span><span class="tx">Zakaz przemocy ludzkiej oraz zwierzęcej lub treści, które pokazują znęcanie się nad zwierzętami, nawet jeśli to zwykły mem.</span></li>
-        <li><span class="mk">04</span><span class="tx">Spamowanie linkami, gifami lub zdjęciami jest na serwerze niedozwolone.</span></li>
-        <li><span class="mk">05</span><span class="tx">Celowe wysyłanie zdjęć ludzi lub dzieci (niebędących uczestnikami serwera) w celu obrażenia kogoś jest niedozwolone.</span></li>
-        <li><span class="mk">06</span><span class="tx">Wysyłanie zdjęć uczestników serwera jest legalne, ale jeśli zdjęcie ma obraźliwy sens lub autor miał złe intencje, jest to niedozwolone.</span></li>
-        <li><span class="mk">07</span><span class="tx">Zakaz reklamowania się (żadne kanały o DBD czy Deltarune). Reklama jest dozwolona tylko wtedy, gdy moderator wyda na nią wyraźną zgodę.</span></li>
-        <li><span class="mk">08</span><span class="tx">Zakaz chwalenia Deltarune w jakikolwiek sposób. Dozwolone jest tylko i wyłącznie informowanie o tej grze.</span></li>
-        <li><span class="mk">09</span><span class="tx">Bullying na serwerze jest karalny, ale zwykły ragebait się do tego nie zalicza.</span></li>
-        <li><span class="mk">10</span><span class="tx">Korzystanie z Soundpada i dźwięków na serwerze musi być delikatne wobec innych członków.</span></li>
-        <li><span class="mk">11</span><span class="tx">Jeśli treść wiadomości lub dialogu może kogoś obrazić (i nie jest to ragebait), wiadomość zostanie usunięta, a uczestnik ukarany zeusem.</span></li>
-        <li><span class="mk">12</span><span class="tx">Celowe prowokowanie administracji jest karalne nadaniem roli RUSEK, która ogranicza wysyłanie wiadomości. Przykładem prowokacji jest wyłącznie celowe niedbaniem o regulaminu.</span></li>
-        <li><span class="mk">13</span><span class="tx">Wyznawanie, że czyjaś religia jest lepsza od mojej, jest karalne tak samo jak propaganda religijna.</span></li>
-        <li><span class="mk">14</span><span class="tx">Próba wmówienia komuś, że 2 część Subnautici jest inna niż 1, jest absurdalna, ale karalna nie jest.</span></li>
-        <li><span class="mk">15</span><span class="tx">Celowe obrażanie członków serwera lub sabotowanie poprzez przezywanie serwera jest smutne dla administracji :(</span></li>
-        <li><span class="mk">16</span><span class="tx" style="font-weight: 700; color: var(--crimson-soft);">NIKT NIE MOŻE ZAJĄĆ ŚWIĘTEGO MIEJSCA ADMINISTRACJI, ADMINISTRACJA JEST NAJLEPSZA I TYLKO JEDNA!!!</span></li>
+        <li><span class="mk">01</span><span class="tx" id="rule-1-1">Zakaz gore i pornografii we wszystkich gatunkach. Tak samo zakaz dziadków z trzema chujami (pls).</span></li>
+        <li><span class="mk">02</span><span class="tx" id="rule-1-2">Zakazane jest wrzucanie zdjęć i gifów przedstawiających łamania prawa z udziałem nieletnich (te śmieszne można, ale nie wszystkie).</span></li>
+        <li><span class="mk">03</span><span class="tx" id="rule-1-3">Zakaz przemocy ludzkiej oraz zwierzęcej lub treści, które pokazują znęcanie się nad zwierzętami, even jeśli to zwykły mem.</span></li>
+        <li><span class="mk">04</span><span class="tx" id="rule-1-4">Spamowanie linkami, gifami lub zdjęciami jest na serwerze niedozwolone.</span></li>
+        <li><span class="mk">05</span><span class="tx" id="rule-1-5">Celowe wysyłanie zdjęć ludzi lub dzieci (niebędących uczestnikami serwera) w celu obrażenia kogoś jest niedozwolone.</span></li>
+        <li><span class="mk">06</span><span class="tx" id="rule-1-6">Wysyłanie zdjęć uczestników serwera jest legalne, ale jeśli zdjęcie ma obraźliwy sens lub autor miał złe intencje, jest to niedozwolone.</span></li>
+        <li><span class="mk">07</span><span class="tx" id="rule-1-7">Zakaz reklamowania się (żadne kanały o DBD czy Deltarune). Reklama jest dozwolona tylko wtedy, gdy moderator wyda na nią wyraźną zgodę.</span></li>
+        <li><span class="mk">08</span><span class="tx" id="rule-1-8">Zakaz chwalenia Deltarune w jakikolwiek sposób. Dozwolone jest tylko i wyłącznie informowanie o tej grze.</span></li>
+        <li><span class="mk">09</span><span class="tx" id="rule-1-9">Bullying na serwerze jest karalny, ale zwykły ragebait się do tego nie zalicza.</span></li>
+        <li><span class="mk">10</span><span class="tx" id="rule-1-10">Korzystanie z Soundpada i dźwięków na serwerze musi być delikatne wobec innych członków.</span></li>
+        <li><span class="mk">11</span><span class="tx" id="rule-1-11">Jeśli treść wiadomości lub dialogu może kogoś obrazić (i nie is jest to ragebait), wiadomość zostanie usunięta, a uczestnik ukarany zeusem.</span></li>
+        <li><span class="mk">12</span><span class="tx" id="rule-1-12">Celowe prowokowanie administracji jest karalne nadaniem roli RUSEK, która ogranicza wysyłanie wiadomości. Przykładem prowokacji jest wyłącznie celowe niedbaniem o regulaminu.</span></li>
+        <li><span class="mk">13</span><span class="tx" id="rule-1-13">Wyznawanie, że czyjaś religia jest lepsza od mojej, jest karalne tak samo jak propaganda religijna.</span></li>
+        <li><span class="mk">14</span><span class="tx" id="rule-1-14">Próba wmówienia komuś, że 2 część Subnautici jest inna niż 1, jest absurdalna, ale karalna nie jest.</span></li>
+        <li><span class="mk">15</span><span class="tx" id="rule-1-15">Celowe obrażanie członków serwera lub sabotowanie poprzez przezywanie serwera jest smutne dla administracji :(</span></li>
+        <li><span class="mk">16</span><span class="tx" id="rule-1-16" style="font-weight: 700; color: var(--crimson-soft);">NIKT NIE MOŻE ZAJĄĆ ŚWIĘTEGO MIEJSCA ADMINISTRACJI, ADMINISTRACJA JEST NAJLEPSZA I TYLKO JEDNA!!!</span></li>
       </ol>
     </article>
 
     <!-- Sekcja 2: System Kar -->
     <article class="sec" id="system-kar">
-      <header class="sec-head"><span class="sec-num">2</span><h2 class="sec-title">System Kar.</h2></header>
+      <header class="sec-head"><span class="sec-num">2</span><h2 class="sec-title" id="title-sec2">System Kar.</h2></header>
       <ol>
-        <li><span class="mk">01</span><span class="tx">Kary są wymierzane przez administrację. Przypadkowe wiadomości naruszające zasady nie są karane, ale członek serwera od razu zostaje poinformowany o błędzie.</span></li>
-        <li><span class="mk">02</span><span class="tx">Ponowne wysyłanie rzeczy niezgodnych z regulaminem kończy się ich usunięciem i wymierzeniem kary.</span></li>
-        <li><span class="mk">03</span><span class="tx" style="text-shadow: 0 0 10px rgba(180,31,31,0.5);">Jeśli członek serwera płacze ze smutku, jest obrażony na administrację i z tego powodu wysyła porno, <strong>ZOSTAJE POWIESZONY I DOSTAJE NAJWIĘKSZĄ KARĘ Z MOŻLIWYCH</strong>.</span></li>
-        <li><span class="mk">04</span><span class="tx">Przerwa trwa maksymalnie 60 sek, 1 min, 10 min, 1 godz lub 24 godz. Kara przerwy jest wyznaczana schodkami, czyli od najmniejszego do największego czasu.</span></li>
+        <li><span class="mk">01</span><span class="tx" id="rule-2-1">Kary są wymierzane przez administrację. Przypadkowe wiadomości naruszające zasady nie są karane, ale członek serwera od razu zostaje poinformowany o błędzie.</span></li>
+        <li><span class="mk">02</span><span class="tx" id="rule-2-2">Ponowne wysyłanie rzeczy niezgodnych z regulaminem kończy się ich usunięciem i wymierzeniem kary.</span></li>
+        <li><span class="mk">03</span><span class="tx" id="rule-2-3" style="text-shadow: 0 0 10px rgba(180,31,31,0.5);">Jeśli członek serwera płacze ze smutku, jest obrażony na administrację i z tego powodu wysyła porno, <strong id="rule-2-3-strong">ZOSTAJE POWIESZONY I DOSTAJE NAJWIĘKSZĄ KARĘ Z MOŻLIWYCH</strong>.</span></li>
+        <li><span class="mk">04</span><span class="tx" id="rule-2-4">Przerwa trwa maksymalnie 60 sek, 1 min, 10 min, 1 godz lub 24 godz. Kara przerwy jest wyznaczana schodkami, czyli od najmniejszego do największego czasu.</span></li>
       </ol>
     </article>
 
     <!-- Sekcja 3: Postanowienia Końcowe -->
     <article class="sec" id="postanowienia-koncowe">
-      <header class="sec-head"><span class="sec-num">3</span><h2 class="sec-title">Postanowienia Końcowe.</h2></header>
+      <header class="sec-head"><span class="sec-num">3</span><h2 class="sec-title" id="title-sec3">Postanowienia Końcowe.</h2></header>
       <ol>
-        <li><span class="mk">01</span><span class="tx">Kwestie nieujęte w regulaminie rozpatrywane są indywidualnie przez !!!Administrację!!!</span></li>
-        <li><span class="mk">02</span><span class="tx">Regulamin wchodzi w życie w momencie jego utworzenia lub zmiany.</span></li>
-        <li><span class="mk">03</span><span class="tx">Administracja zastrzega sobie prawo do zmiany regulaminu w dowolnym momencie, respektując główną zasadę.</span></li>
+        <li><span class="mk">01</span><span class="tx" id="rule-3-1">Kwestie nieujęte w regulaminie rozpatrywane są indywidualnie przez !!!Administrację!!!</span></li>
+        <li><span class="mk">02</span><span class="tx" id="rule-3-2">Regulamin wchodzi w życie w momencie jego utworzenia lub zmiany.</span></li>
+        <li><span class="mk">03</span><span class="tx" id="rule-3-3">Administracja zastrzega sobie prawo do zmiany regulaminu w dowolnym momencie, respektując główną zasadę.</span></li>
       </ol>
     </article>
   </section>
 
   <section class="final">
-    <h3>ROZUMIESZ ZASADY?<br/><span>Wbijaj na serwer.</span></h3>
+    <h3 id="final-header">ROZUMIESZ ZASADY?<br/><span id="final-subheader">Wbijaj na serwer.</span></h3>
     <a class="cta xl" href="https://discord.gg/caqPbCzUZ" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 4.73A19.56 19.56 0 0 0 15.65 3.4a.05.05 0 0 0-.05.03c-.32.57-.67 1.19-.92 1.76a18 18 0 0 0-5.36 0c-.25-.57-.61-1.19-.93-1.76a.05.05 0 0 0-.05-.03 19.56 19.56 0 0 0-3.62 1.33.05.05 0 0 0-.02.02C1.3 9.4 1 13.9 1.43 18.36a.05.05 0 0 0 .02.04 19.78 19.78 0 0 0 5.94 2.97.05.05 0 0 0 .06-.02c.46-.62.87-1.28 1.22-1.97a.05.05 0 0 0-.03-.07c-.63-.24-1.23-.53-1.8-.87a.05.05 0 0 1 0-.08c.12-.09.25-.19.37-.29a.05.05 0 0 1 .05-.01 14.15 14.15 0 0 0 11.48 0a.05.05 0 0 1 .05.01c.12.1.25.2.37.29a.05.05 0 0 1 0 .08c-.57.34-1.17.63-1.8.87a.05.05 0 0 0-.03.07c.35.69.76 1.35 1.22 1.97a.05.05 0 0 0 .06.02 19.78 19.78 0 0 0 5.94-2.97.05.05 0 0 0 .02-.04c.5-5.1-.84-9.56-3.23-13.61a.05.05 0 0 0-.02-.02zM8.52 14.85c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4zm6.96 0c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4z"/></svg>
-      <span>Dołącz do caption.gif</span>
+      <span id="btn-final-join">Dołącz do caption.gif</span>
     </a>
-    <p class="hint">Klikając przycisk akceptujesz powyższy regulamin.</p>
+    <p class="hint" id="final-hint">Klikając przycisk akceptujesz powyższy regulamin.</p>
   </section>
 
   <div class="toggle-wrapper">
     <button class="btn-toggle-geo" id="toggle-geo-btn">Wyłącz geometrię</button>
   </div>
 
-  <footer><span>© caption.gif</span><span class="d">●</span><span>Regulamin serwera Discord</span></footer>
+  <footer>
+    <div class="footer-container">
+      <div class="lang-btns">
+        <button class="btn-flag active" id="lang-pl-btn" aria-label="Język Polski"></button>
+        <button class="btn-flag" id="lang-ua-btn" aria-label="Українська мова"></button>
+      </div>
+      <div>
+        <span id="footer-copy">© caption.gif</span>
+        <span class="d">●</span>
+        <span id="footer-text">Regulamin serwera Discord</span>
+      </div>
+    </div>
+  </footer>
 </main>
 
 <div id="game-popup" class="game-overlay">
   <div class="game-box">
     <button id="close-game" class="game-close-btn">&times;</button>
-    <h3>Klikaj w obrazek!</h3>
+    <h3 id="game-title">Klikaj w obrazek!</h3>
     <img src="Tymonzgolanogo.png" id="game-target" class="click-image" alt="Klikaj!" />
   </div>
 </div>
@@ -454,11 +527,11 @@ footer .d{color:var(--crimson)}
     
     if (isGeometryVisible) {
       canvas.classList.remove('hidden');
-      toggleBtn.textContent = 'Wyłącz geometrię';
+      toggleBtn.textContent = currentLang === 'pl' ? 'Wyłącz geometrię' : 'Вимкнути геометрію';
       animate();
     } else {
       canvas.classList.add('hidden');
-      toggleBtn.textContent = 'Włącz geometrię';
+      toggleBtn.textContent = currentLang === 'pl' ? 'Włącz geometrię' : 'Увімкнути геометрію';
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
@@ -469,6 +542,208 @@ footer .d{color:var(--crimson)}
   });
 
   animate();
+</script>
+
+<script>
+  // Tłumaczenia PL / UA
+  const translations = {
+    pl: {
+      title: "Regulamin — caption.gif",
+      hero_title_l1: "REGULAMIN",
+      hero_lead: "Zanim połączysz swój głos z Chórem i przekroczysz Próg Sanktuarium musisz przyjąć Święty Kanon który bezwzględnie wiąże każdego nowego wyznawcę. Wejście tutaj oznacza całkowite odcięcie od dawnego życia rodziny przyjaciół i dotychczasowych nawyków ponieważ od teraz Twój czas Twoje decyzje oraz cały Twój majątek należą wyłącznie do Przewodnika. AMEN NAMASTE AMEN!!!",
+      btn_join_discord: "Dołącz do Discorda",
+      btn_read_rules: "Czytaj regulamin ↓",
+      toc_label: "SPIS&nbsp;TREŚCI",
+      toc_sec1: "Zasady Ogólne.",
+      toc_sec2: "System Kar.",
+      toc_sec3: "Postanowienia Końcowe.",
+      title_sec1: "Zasady Ogólne.",
+      title_sec2: "System Kar.",
+      title_sec3: "Postanowienia Końcowe.",
+      
+      // Sekcja 1
+      rule_1_1: "Zakaz gore i pornografii we wszystkich gatunkach. Tak samo zakaz dziadków z trzema chujami (pls).",
+      rule_1_2: "Zakazane jest wrzucanie zdjęć i gifów przedstawiających łamania prawa z udziałem nieletnich (te śmieszne można, ale nie wszystkie).",
+      rule_1_3: "Zakaz przemocy ludzkiej oraz zwierzęcej lub treści, które pokazują znęcanie się nad zwierzętami, even jeśli to zwykły mem.",
+      rule_1_4: "Spamowanie linkami, gifami lub zdjęciami jest na serwerze niedozwolone.",
+      rule_1_5: "Celowe wysyłanie zdjęć ludzi lub dzieci (niebędących uczestnikami serwera) w celu obrażenia kogoś jest niedozwolone.",
+      rule_1_6: "Wysyłanie zdjęć uczestników serwera jest legalne, ale jeśli zdjęcie ma obraźliwy sens lub autor miał złe intencje, jest to niedozwolone.",
+      rule_1_7: "Zakaz reklamowania się (żadne kanały o DBD czy Deltarune). Reklama jest dozwolona tylko wtedy, gdy moderator wyda na nią wyraźną zgodę.",
+      rule_1_8: "Zakaz chwalenia Deltarune w jakikolwiek sposób. Dozwolone jest tylko i wyłącznie informowanie o tej grze.",
+      rule_1_9: "Bullying na serwerze jest karalny, ale zwykły ragebait się do tego nie zalicza.",
+      rule_1_10: "Korzystanie z Soundpada i dźwięków na serwerze musi być delikatne wobec innych członków.",
+      rule_1_11: "Jeśli treść wiadomości lub dialogu może kogoś obrazić (i nie jest to ragebait), wiadomość zostanie usunięta, a uczestnik ukarany zeusem.",
+      rule_1_12: "Celowe prowokowanie administracji jest karalne nadaniem roli RUSEK, która ogranicza wysyłanie wiadomości. Przykładem prowokacji jest wyłącznie celowe niedbaniem o regulaminu.",
+      rule_1_13: "Wyznawanie, że czyjaś religia jest lepsza od mojej, jest karalne tak samo jak propaganda religijna.",
+      rule_1_14: "Próba wmówienia komuś, że 2 część Subnautici jest inna niż 1, jest absurdalna, ale karalna nie jest.",
+      rule_1_15: "Celowe obrażanie członków serwera lub sabotowanie poprzez przezywanie serwera jest smutne dla administracji :(",
+      rule_1_16: "NIKT NIE MOŻE ZAJĄĆ ŚWIĘTEGO MIEJSCA ADMINISTRACJI, ADMINISTRACJA JEST NAJLEPSZA I TYLKO JEDNA!!!",
+
+      // Sekcja 2
+      rule_2_1: "Kary są wymierzane przez administrację. Przypadkowe wiadomości naruszające zasady nie są karane, ale członek serwera od razu zostaje poinformowany o błędzie.",
+      rule_2_2: "Ponowne wysyłanie rzeczy niezgodnych z regulaminem kończy się ich usunięciem i wymierzeniem kary.",
+      rule_2_3_strong: "ZOSTAJE POWIESZONY I DOSTAJE NAJWIĘKSZĄ KARĘ Z MOŻLIWYCH",
+      rule_2_3_text: "Jeśli członek serwera płacze ze smutku, jest obrażony na administrację i z tego powodu wysyła porno, ",
+      rule_2_4: "Przerwa trwa maksymalnie 60 sek, 1 min, 10 min, 1 godz lub 24 godz. Kara przerwy jest wyznaczana schodkami, czyli od najmniejszego do największego czasu.",
+
+      // Sekcja 3
+      rule_3_1: "Kwestie nieujęte w regulaminie rozpatrywane są indywidualnie przez !!!Administrację!!!",
+      rule_3_2: "Regulamin wchodzi w życie w momencie jego utworzenia lub zmiany.",
+      rule_3_3: "Administracja zastrzega sobie prawo do zmiany regulaminu w dowolnym momencie, respektując główną zasadę.",
+
+      // Stopka i final
+      final_header: "ROZUMIESZ ZASADY?",
+      final_subheader: "Wbijaj na serwer.",
+      btn_final_join: "Dołącz do caption.gif",
+      final_hint: "Klikając przycisk akceptujesz powyższy regulamin.",
+      footer_text: "Regulamin serwera Discord",
+      
+      // Inne elementy
+      btn_geo_off: "Wyłącz geometrię",
+      btn_geo_on: "Włącz geometrię",
+      game_title: "Klikaj w obrazek!"
+    },
+    ua: {
+      title: "Правила — caption.gif",
+      hero_title_l1: "ПРАВИЛА",
+      hero_lead: "Перш ніж об'єднати свій голос з Хором і переступити Поріг Святилища, ти повинен прийняти Священний Канон, який беззастережно зобов'язує кожного нового послідовника. Вхід сюди означає повне відсікання від минулого життя, родини, друзів та колишніх звичок, бо відтепер твій час, твої рішення та все твоє майно належать виключно Провіднику. АМІНЬ НАМАСТЕ АМІНЬ!!!",
+      btn_join_discord: "Приєднатися до Discord",
+      btn_read_rules: "Читати правила ↓",
+      toc_label: "ЗМІСТ",
+      toc_sec1: "Загальні правила.",
+      toc_sec2: "Система покарань.",
+      toc_sec3: "Прикінцеві положення.",
+      title_sec1: "Загальні правила.",
+      title_sec2: "Система покарань.",
+      title_sec3: "Прикінцеві положення.",
+      
+      // Sekcja 1
+      rule_1_1: "Заборонено горе та порнографію у всіх жанрах. Також заборона дідів з трьома членами (плз).",
+      rule_1_2: "Заборонено завантажувати фото та гіфки, що показують порушення закону за участю неповнолітніх (ті смішні можна, але не всі).",
+      rule_1_3: "Заборонено насильство над людьми та тваринами або контент, який показує знущання над тваринами, навіть якщо це звичайний мем.",
+      rule_1_4: "Спам посиланнями, гіфками або фотографіями на сервері заборонений.",
+      rule_1_5: "Навмисне надсилання фотографій людей або дітей (які не є учасниками сервера) з метою когось образити заборонено.",
+      rule_1_6: "Надсилання фото учасників сервера дозволено, але якщо фото має образливий сенс або автор мав погані наміри, це заборонено.",
+      rule_1_7: "Заборонено рекламу (жодних каналів про DBD чи Deltarune). Реклама дозволена тільки тоді, коли модератор дасть на це чітку згоду.",
+      rule_1_8: "Заборонено хвалити Deltarune будь-яким чином. Дозволено виключно інформування про цю гру.",
+      rule_1_9: "Булінг на сервері карається, але звичайний рейджбайт до цього не відноситься.",
+      rule_1_10: "Використання Soundpad та звуків на сервері має бути делікатним до інших учасників.",
+      rule_1_11: "Якщо вміст повідомлення або діалогу може когось образити (і це не рейджбайт), повідомлення буде видалено, а учасника покарано зевсом.",
+      rule_1_12: "Навмисне провокування адміністрації карається видачею ролі RUSEK, яка обмежує надсилання повідомлень. Прикладом провокації є виключно навмисне нехтування правилами.",
+      rule_1_13: "Ствердження, що чиясь релігія краща за мою, карається так само, як і релігійна пропаганда.",
+      rule_1_14: "Спроба переконати когось, що 2-га частина Subnautica відрізняється від 1-ї, абсурдна, але не карається.",
+      rule_1_15: "Навмисне ображання учасників сервера або саботаж через обзивання сервера засмучує адміністрацію :(",
+      rule_1_16: "НІХТО НЕ МОЖЕ ЗАЙНЯТИ СВЯТЕ МІСЦЕ АДМІНІСТРАЦІЇ, АДМІНІСТРАЦІЯ НАЙКРАЩА І ТІЛЬКИ ОДНА!!!",
+
+      // Sekcja 2
+      rule_2_1: "Покарання призначаються адміністрацією. Випадкові повідомлення, що порушують правила, не караються, але учасник сервера відразу інформується про помилку.",
+      rule_2_2: "Повторне надсилання речей, які не відповідають правилам, закінчується їх видаленням та призначенням покарання.",
+      rule_2_3_strong: "ЙОГО ПОВІСЯТЬ І ВІН ОТРИМАЄ НАЙБІЛЬШЕ ПОКАРАННЯ З МОЖЛИВИХ",
+      rule_2_3_text: "Якщо учасник сервера плаче від смутку, ображений на адміністрацію і через це надсилає порно, ",
+      rule_2_4: "Таймаут триває максимум 60 сек, 1 хв, 10 хв, 1 год або 24 год. Покарання таймауту призначається сходинками, тобто від найменшого до найбільшого часу.",
+
+      // Sekcja 3
+      rule_3_1: "Питання, не врегульовані цими правилами, розглядаються індивідуально !!!Адміністрацією!!!",
+      rule_3_2: "Правила набувають чинності з моменту їх створення або зміни.",
+      rule_3_3: "Адміністрація залишає за собою право змінювати правила в будь-який момент, дотримуючись головного принципу.",
+
+      // Stopka i final
+      final_header: "РОЗУМІЄШ ПРАВИЛА?",
+      final_subheader: "Залітай на сервер.",
+      btn_final_join: "Приєднатися до caption.gif",
+      final_hint: "Натискаючи кнопку, ви погоджуєтеся з вищезазначеними правилами.",
+      footer_text: "Правила сервера Discord",
+      
+      // Inne elementy
+      btn_geo_off: "Вимкнути геометрію",
+      btn_geo_on: "Увімкнути геометрію",
+      game_title: "Клікай по картинці!"
+    }
+  };
+
+  let currentLang = 'pl';
+
+  const plBtn = document.getElementById('lang-pl-btn');
+  const uaBtn = document.getElementById('lang-ua-btn');
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+
+    // Zmiana tekstu elementów
+    document.getElementById('page-title').textContent = t.title;
+    document.getElementById('hero-title-l1').textContent = t.hero_title_l1;
+    document.getElementById('hero-lead').textContent = t.hero_lead;
+    document.getElementById('btn-join-discord').textContent = t.btn_join_discord;
+    document.getElementById('btn-read-rules').textContent = t.btn_read_rules;
+    document.getElementById('toc-label').innerHTML = t.toc_label;
+    document.getElementById('toc-sec1').textContent = t.toc_sec1;
+    document.getElementById('toc-sec2').textContent = t.toc_sec2;
+    document.getElementById('toc-sec3').textContent = t.toc_sec3;
+    document.getElementById('title-sec1').textContent = t.title_sec1;
+    document.getElementById('title-sec2').textContent = t.title_sec2;
+    document.getElementById('title-sec3').textContent = t.title_sec3;
+
+    // Sekcja 1 zasady
+    document.getElementById('rule-1-1').textContent = t.rule_1_1;
+    document.getElementById('rule-1-2').textContent = t.rule_1_2;
+    document.getElementById('rule-1-3').textContent = t.rule_1_3;
+    document.getElementById('rule-1-4').textContent = t.rule_1_4;
+    document.getElementById('rule-1-5').textContent = t.rule_1_5;
+    document.getElementById('rule-1-6').textContent = t.rule_1_6;
+    document.getElementById('rule-1-7').textContent = t.rule_1_7;
+    document.getElementById('rule-1-8').textContent = t.rule_1_8;
+    document.getElementById('rule-1-9').textContent = t.rule_1_9;
+    document.getElementById('rule-1-10').textContent = t.rule_1_10;
+    document.getElementById('rule-1-11').textContent = t.rule_1_11;
+    document.getElementById('rule-1-12').textContent = t.rule_1_12;
+    document.getElementById('rule-1-13').textContent = t.rule_1_13;
+    document.getElementById('rule-1-14').textContent = t.rule_1_14;
+    document.getElementById('rule-1-15').textContent = t.rule_1_15;
+    document.getElementById('rule-1-16').textContent = t.rule_1_16;
+
+    // Sekcja 2 zasady
+    document.getElementById('rule-2-1').textContent = t.rule_2_1;
+    document.getElementById('rule-2-2').textContent = t.rule_2_2;
+    
+    // Specjalna zasada nr 3 z pogrubieniem
+    const rule2_3 = document.getElementById('rule-2-3');
+    rule2_3.innerHTML = t.rule_2_3_text + `<strong id="rule-2-3-strong">${t.rule_2_3_strong}</strong>.`;
+    
+    document.getElementById('rule-2-4').textContent = t.rule_2_4;
+
+    // Sekcja 3 zasady
+    document.getElementById('rule-3-1').textContent = t.rule_3_1;
+    document.getElementById('rule-3-2').textContent = t.rule_3_2;
+    document.getElementById('rule-3-3').textContent = t.rule_3_3;
+
+    // Final & footer
+    const finalHeader = document.getElementById('final-header');
+    finalHeader.innerHTML = t.final_header + `<br/><span id="final-subheader">${t.final_subheader}</span>`;
+    document.getElementById('btn-final-join').textContent = t.btn_final_join;
+    document.getElementById('final-hint').textContent = t.final_hint;
+    document.getElementById('footer-text').textContent = t.footer_text;
+    document.getElementById('game-title').textContent = t.game_title;
+
+    // Tekst przycisku geometrii
+    if (isGeometryVisible) {
+      toggleBtn.textContent = t.btn_geo_off;
+    } else {
+      toggleBtn.textContent = t.btn_geo_on;
+    }
+
+    // Aktywacja przycisków językowych
+    if (lang === 'pl') {
+      plBtn.classList.add('active');
+      uaBtn.classList.remove('active');
+    } else {
+      uaBtn.classList.add('active');
+      plBtn.classList.remove('active');
+    }
+  }
+
+  plBtn.addEventListener('click', () => setLanguage('pl'));
+  uaBtn.addEventListener('click', () => setLanguage('ua'));
 </script>
 </body>
 </html>
