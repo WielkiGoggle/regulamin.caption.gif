@@ -1,3 +1,5 @@
+import { sql } from "@vercel/postgres";
+
 export default async function handler(req, res) {
 
   const code = req.query.code;
@@ -5,6 +7,7 @@ export default async function handler(req, res) {
   if (!code) {
     return res.status(400).send("Brak kodu Discord");
   }
+
 
   // Pobieranie tokena Discord
   const response = await fetch(
@@ -24,7 +27,9 @@ export default async function handler(req, res) {
     }
   );
 
+
   const data = await response.json();
+
 
   if (!data.access_token) {
     return res.status(500).json(data);
@@ -41,8 +46,12 @@ export default async function handler(req, res) {
     }
   );
 
+
   const user = await userResponse.json();
 
+
+  // Zapisywanie użytkownika do bazy
+  await sql`
     INSERT INTO users (
       discord_id,
       username,
@@ -63,6 +72,7 @@ export default async function handler(req, res) {
   res.status(200).json({
     message: "Zalogowano i zapisano w bazie!",
     username: user.username,
+    avatar: user.avatar,
     id: user.id
   });
 }
