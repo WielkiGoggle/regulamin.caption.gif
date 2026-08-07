@@ -223,7 +223,61 @@ footer .d {
   .toggle-wrapper { justify-content: center; padding: 0 20px 30px; }
   .footer-container { flex-direction: column; gap: 14px; text-align: center; }
 }
+#login-box {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
 
+#login-box > a,
+#login-box > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--crimson);
+  border: 1px solid var(--crimson-deep);
+  border-radius: 7px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(180,31,31,.18);
+  transition: .18s;
+}
+
+#login-box > a:hover,
+#login-box > div:hover {
+  background: #c92424;
+  transform: translateY(-1px);
+}
+
+#login-box img {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#logout-btn {
+  background: transparent;
+  border: 0;
+  color: rgba(255,255,255,.7);
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+}
+
+#logout-btn:hover {
+  color: #fff;
+}
+  
 </style>
 </head>
 <body>
