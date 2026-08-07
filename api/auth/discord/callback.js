@@ -1,5 +1,3 @@
-import { sql } from "@vercel/postgres";
-
 export default async function handler(req, res) {
 
   const code = req.query.code;
@@ -45,9 +43,6 @@ export default async function handler(req, res) {
 
   const user = await userResponse.json();
 
-
-  // Zapis do bazy danych
-  await sql`
     INSERT INTO users (
       discord_id,
       username,
