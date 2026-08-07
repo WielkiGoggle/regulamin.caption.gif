@@ -1,13 +1,10 @@
 export default function handler(req, res) {
-  const clientId = process.env.DISCORD_CLIENT_ID;
-  const redirectUri = process.env.DISCORD_REDIRECT_URI;
-
-  const url =
+  const discordUrl =
     "https://discord.com/oauth2/authorize" +
-    `?client_id=${clientId}` +
+    "?client_id=" + process.env.DISCORD_CLIENT_ID +
     "&response_type=code" +
-    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-    "&scope=identify";
+    "&redirect_uri=" + encodeURIComponent(process.env.DISCORD_REDIRECT_URI) +
+    "&scope=identify%20email";
 
-  res.redirect(url);
+  res.redirect(discordUrl);
 }
