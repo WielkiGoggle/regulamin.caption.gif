@@ -244,7 +244,7 @@ footer .d {
     <a href="#wkrotce">???</a>
     <a href="#wkrotce">Gra</a>
     <div id="login-box">
-    <a href="/api/auth/discord/login">Login Discord</a>
+    <a id="discord-login" href="/api/auth/discord/login">Login Discord</a>
     </div>
     </nav>
     <div class="updates-panel" id="updates-panel" hidden>
@@ -694,6 +694,42 @@ footer .d {
 
   plBtn.addEventListener('click', () => setLanguage('pl'));
   uaBtn.addEventListener('click', () => setLanguage('ua'));
+</script>
+  <script>
+async function checkDiscordUser() {
+  try {
+    const res = await fetch("/api/auth/user");
+    const user = await res.json();
+
+    if (user.loggedIn) {
+      document.getElementById("login-box").innerHTML = `
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:8px;
+          background:#b41f1f;
+          padding:8px 15px;
+          border-radius:7px;
+          color:white;
+          font-family:Arial;
+          font-weight:bold;
+        ">
+          <img src="${user.avatar}" 
+          style="
+            width:28px;
+            height:28px;
+            border-radius:50%;
+          ">
+          <span>${user.username}</span>
+        </div>
+      `;
+    }
+  } catch(e) {
+    console.log("Nie zalogowano");
+  }
+}
+
+checkDiscordUser();
 </script>
 </body>
 </html>
