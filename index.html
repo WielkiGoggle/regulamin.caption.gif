@@ -136,7 +136,8 @@ header.hd.scrolled{
   font-family:var(--font-display);
   font-size:17px;
   font-weight:700;
-  letter-spacing:.04em
+  letter-spacing:.04em;
+  flex-shrink:0
 }
 
 .logo{
@@ -175,7 +176,7 @@ header.hd.scrolled{
   flex-wrap:wrap
 }
 
-.site-nav > a{
+.site-nav a{
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -196,108 +197,13 @@ header.hd.scrolled{
   transition:.18s
 }
 
-.site-nav > a:hover,
-.site-nav > a:focus-visible{
+.site-nav a:hover,
+.site-nav a:focus-visible{
   background:#c92424;
   transform:translateY(-1px);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.15),
     0 7px 16px rgba(217,69,69,.26)
-}
-
-/* =========================
-   LOGIN - ZAWSZE PO PRAWEJ
-   ========================= */
-
-#login-box{
-  margin-left:auto;
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  flex-shrink:0
-}
-
-#discord-login{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:7px 12px;
-  min-width:auto !important;
-  background:var(--crimson);
-  border:1px solid var(--crimson-deep);
-  border-radius:7px;
-  color:#fff;
-  font-family:var(--font-display);
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
-    0 4px 12px rgba(180,31,31,.18);
-  transition:.18s
-}
-
-#discord-login:hover{
-  background:#c92424;
-  transform:translateY(-1px)
-}
-
-/* Zalogowany użytkownik */
-
-.user-menu{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:5px 8px 5px 6px;
-  background:var(--crimson);
-  border:1px solid var(--crimson-deep);
-  border-radius:7px;
-  color:#fff;
-  font-family:var(--font-display);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
-    0 4px 12px rgba(180,31,31,.18);
-}
-
-.user-avatar{
-  width:25px;
-  height:25px;
-  border-radius:50%;
-  object-fit:cover;
-  display:block;
-  border:1px solid rgba(255,255,255,.25)
-}
-
-.user-name{
-  max-width:130px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.05em;
-  text-transform:none
-}
-
-.logout-btn{
-  margin-left:3px;
-  padding:4px 6px;
-  border:0;
-  border-left:1px solid rgba(255,255,255,.2);
-  background:transparent;
-  color:rgba(255,255,255,.7);
-  font-family:var(--font-display);
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:.18s
-}
-
-.logout-btn:hover{
-  color:#fff
 }
 
 .version-badge{
@@ -310,7 +216,8 @@ header.hd.scrolled{
   font-size:10px;
   letter-spacing:.06em;
   cursor:pointer;
-  transition:.18s
+  transition:.18s;
+  flex-shrink:0
 }
 
 .version-badge:hover,
@@ -324,8 +231,113 @@ header.hd.scrolled{
 .nav-divider{
   width:1px;
   height:30px;
-  background:var(--line-strong)
+  background:var(--line-strong);
+  flex-shrink:0
 }
+
+/* =========================
+   LOGIN - ZAWSZE PRAWO
+   ========================= */
+
+#login-box{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex-shrink:0;
+  min-width:max-content
+}
+
+#discord-login{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:7px 12px;
+  background:var(--crimson);
+  border:1px solid var(--crimson-deep);
+  border-radius:7px;
+  color:#fff;
+  font-family:var(--font-display);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 4px 12px rgba(180,31,31,.18);
+  transition:.18s
+}
+
+#discord-login:hover{
+  background:#c92424;
+  transform:translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.15),
+    0 7px 16px rgba(217,69,69,.26)
+}
+
+#logged-user{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 7px 5px 9px;
+  background:var(--crimson);
+  border:1px solid var(--crimson-deep);
+  border-radius:7px;
+  color:#fff;
+  font-family:var(--font-display);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 4px 12px rgba(180,31,31,.18)
+}
+
+#discord-avatar{
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  border:1px solid rgba(255,255,255,.25)
+}
+
+#discord-username{
+  max-width:130px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+#logout-btn{
+  margin-left:4px;
+  padding:5px 8px;
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:5px;
+  color:#fff;
+  font-family:var(--font-display);
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.18s
+}
+
+#logout-btn:hover{
+  background:rgba(0,0,0,.45);
+  border-color:rgba(255,255,255,.3)
+}
+
+/* =========================
+   UPDATES
+   ========================= */
 
 .updates-panel{
   position:absolute;
@@ -460,6 +472,19 @@ header.hd.scrolled{
   height:24px
 }
 
+.cta .cta-img{
+  width:26px;
+  height:26px;
+  object-fit:contain;
+  flex-shrink:0;
+  filter:brightness(0) invert(1)
+}
+
+.cta.xl .cta-img{
+  width:24px;
+  height:24px
+}
+
 /* =========================
    HERO
    ========================= */
@@ -467,7 +492,9 @@ header.hd.scrolled{
 .hero{
   position:relative;
   z-index:3;
-  padding:clamp(40px,8vh,80px) clamp(20px,4vw,56px) clamp(60px,10vh,120px);
+  padding:clamp(40px,8vh,80px)
+    clamp(20px,4vw,56px)
+    clamp(60px,10vh,120px);
   max-width:1280px;
   margin:0 auto
 }
@@ -525,7 +552,7 @@ h1.title{
 }
 
 /* =========================
-   SPIS TREŚCI
+   SPIS
    ========================= */
 
 nav.toc{
@@ -593,7 +620,7 @@ nav.toc{
 }
 
 /* =========================
-   TREŚĆ
+   CONTENT
    ========================= */
 
 .content{
@@ -601,7 +628,8 @@ nav.toc{
   z-index:3;
   max-width:1280px;
   margin:0 auto;
-  padding:clamp(40px,8vh,96px) clamp(20px,4vw,56px);
+  padding:clamp(40px,8vh,96px)
+    clamp(20px,4vw,56px);
   display:flex;
   flex-direction:column;
   gap:clamp(56px,9vh,110px);
@@ -679,7 +707,9 @@ nav.toc{
   position:relative;
   z-index:3;
   text-align:center;
-  padding:clamp(80px,14vh,160px) clamp(20px,4vw,56px) clamp(40px,6vh,80px);
+  padding:clamp(80px,14vh,160px)
+    clamp(20px,4vw,56px)
+    clamp(40px,6vh,80px);
   border-top:1px solid var(--line);
   background:radial-gradient(
     700px 400px at 50% 0%,
@@ -821,8 +851,8 @@ footer .d{
 #lang-pl-btn{
   background:linear-gradient(
     to bottom,
-    #ffffff 0%,
-    #ffffff 50%,
+    #fff 0%,
+    #fff 50%,
     #dc2626 50%,
     #dc2626 100%
   ) no-repeat
@@ -844,6 +874,10 @@ footer .d{
 
 @media (max-width:880px){
 
+  header.hd{
+    gap:10px
+  }
+
   nav.toc{
     grid-template-columns:1fr;
     gap:12px
@@ -862,14 +896,6 @@ footer .d{
     grid-template-columns:40px 1fr;
     gap:12px
   }
-
-  header.hd{
-    gap:10px
-  }
-
-  .site-nav{
-    margin-left:auto
-  }
 }
 
 @media (max-width:520px){
@@ -878,7 +904,7 @@ footer .d{
     justify-content:flex-start;
     min-height:52px;
     padding:8px 14px;
-    gap:7px
+    gap:8px
   }
 
   .brand{
@@ -890,28 +916,27 @@ footer .d{
     height:25px
   }
 
+  .site-nav{
+    gap:5px
+  }
+
+  .site-nav a{
+    min-width:0;
+    padding:7px 8px;
+    font-size:11px
+  }
+
   .version-badge{
-    padding:4px 8px;
-    font-size:10px
+    padding:4px 7px;
+    font-size:9px
   }
 
   .nav-divider{
     display:none
   }
 
-  .site-nav{
-    gap:5px;
-    margin-left:auto
-  }
-
-  .site-nav > a{
-    min-width:0;
-    padding:7px 9px;
-    font-size:11px
-  }
-
   #login-box{
-    margin-left:0
+    margin-left:auto
   }
 
   #discord-login{
@@ -919,24 +944,24 @@ footer .d{
     font-size:10px
   }
 
-  .user-menu{
+  #logged-user{
+    padding:4px 5px 4px 6px;
     gap:5px;
-    padding:4px 6px 4px 5px
+    font-size:10px
   }
 
-  .user-avatar{
+  #discord-avatar{
     width:23px;
     height:23px
   }
 
-  .user-name{
-    max-width:75px;
-    font-size:10px
+  #discord-username{
+    max-width:75px
   }
 
-  .logout-btn{
-    font-size:8px;
-    padding:3px 4px
+  #logout-btn{
+    padding:4px 6px;
+    font-size:8px
   }
 
   .cta.sm{
@@ -972,489 +997,617 @@ footer .d{
 
 <main class="root" id="top">
 
-  <canvas id="bg-geometry"></canvas>
-  <div class="grain"></div>
-  <div class="spot"></div>
+<canvas id="bg-geometry"></canvas>
+<div class="grain"></div>
+<div class="spot"></div>
 
-  <!-- =========================
-       GÓRNY PASEK
-       ========================= -->
+<!-- =========================
+     HEADER
+     ========================= -->
 
-  <header class="hd" id="hd">
+<header class="hd" id="hd">
 
-    <a class="brand" href="#top" aria-label="caption.gif">
-      <span class="logo">
-        <img src="logo.png" alt="caption.gif logo" />
-      </span>
-
-      <span class="brand-text">
-        <span class="brand-dot">●</span>
-        caption.gif
-      </span>
-    </a>
-
-    <button
-      class="version-badge"
-      id="updates-toggle"
-      type="button"
-      aria-expanded="false"
-      aria-controls="updates-panel"
-      title="Pokaż historię aktualizacji">
-      v0.1.0
-    </button>
-
-    <span class="nav-divider" aria-hidden="true"></span>
-
-    <nav class="site-nav" aria-label="Główne menu">
-
-      <a href="#top">Regulamin</a>
-      <a href="#wkrotce">???</a>
-      <a href="#wkrotce">Gra</a>
-
-      <!-- LOGIN JEST TUTAJ I margin-left:auto PRZESUWA GO NA PRAWO -->
-      <div id="login-box">
-        <a id="discord-login" href="/api/auth/discord/login">
-          Login Discord
-        </a>
-      </div>
-
-    </nav>
-
-    <div class="updates-panel" id="updates-panel" hidden>
-
-      <h2>Historia aktualizacji</h2>
-
-      <article class="version-entry">
-
-        <h3>v0.1.0 — 05.08.2026</h3>
-
-        <ul>
-          <li>Dodano górne menu: Regulamin, ??? i Gra.</li>
-          <li>Usunięto pierwszy przycisk Discorda i starą minigrę.</li>
-          <li>Powiększono oraz zmieniono na czerwony przycisk „Czytaj regulamin”.</li>
-          <li>Dodano pasek aktualnej wersji strony.</li>
-        </ul>
-
-      </article>
-
-    </div>
-
-  </header>
-
-  <!-- =========================
-       HERO
-       ========================= -->
-
-  <section class="hero">
-
-    <h1 class="title">
-
-      <span class="l1" id="hero-title-l1">
-        REGULAMIN
-      </span>
-
-      <span class="l2">
-        caption.gif
-      </span>
-
-    </h1>
-
-    <p class="lead" id="hero-lead">
-      Zanim połączysz swój głos z Chórem i przekroczysz Próg Sanktuarium musisz przyjąć Święty Kanon który bezwzględnie wiąże każdego nowego wyznawcę. Wejście tutaj oznacza całkowite odcięcie od dawnego życia rodziny przyjaciół i dotychczasowych nawyków ponieważ od teraz Twój czas Twoje decyzje oraz cały Twój majątek należą wyłącznie do Przewodnika. AMEN NAMASTE AMEN!!!
-    </p>
-
-    <div class="actions">
-
-      <a
-        class="cta read-rules"
-        href="#tresc"
-        id="btn-read-rules">
-        Czytaj regulamin ↓
-      </a>
-
-    </div>
-
-  </section>
-
-  <!-- =========================
-       SPIS TREŚCI
-       ========================= -->
-
-  <nav class="toc" aria-label="Spis treści">
-
-    <span class="toc-lbl" id="toc-label">
-      SPIS&nbsp;TREŚCI
+  <a class="brand" href="#top" aria-label="caption.gif">
+    <span class="logo">
+      <img src="logo.png" alt="caption.gif logo" />
     </span>
 
-    <ol>
+    <span class="brand-text">
+      <span class="brand-dot">●</span>
+      caption.gif
+    </span>
+  </a>
 
-      <li>
-        <a href="#zasady-ogolne">
-          <span class="n">1.</span>
-          <span class="t" id="toc-sec1">
-            Zasady Ogólne.
-          </span>
-        </a>
-      </li>
+  <button
+    class="version-badge"
+    id="updates-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="updates-panel"
+    title="Pokaż historię aktualizacji"
+  >
+    v0.1.0
+  </button>
 
-      <li>
-        <a href="#system-kar">
-          <span class="n">2.</span>
-          <span class="t" id="toc-sec2">
-            System Kar.
-          </span>
-        </a>
-      </li>
+  <span class="nav-divider" aria-hidden="true"></span>
 
-      <li>
-        <a href="#postanowienia-koncowe">
-          <span class="n">3.</span>
-          <span class="t" id="toc-sec3">
-            Postanowienia Końcowe.
-          </span>
-        </a>
-      </li>
-
-    </ol>
-
+  <!-- TYLKO MENU -->
+  <nav class="site-nav" aria-label="Główne menu">
+    <a href="#top">Regulamin</a>
+    <a href="#wkrotce">???</a>
+    <a href="#wkrotce">Gra</a>
   </nav>
 
-  <!-- =========================
-       TREŚĆ
-       ========================= -->
-
-  <section class="content" id="tresc">
-
-    <article class="sec" id="zasady-ogolne">
-
-      <header class="sec-head">
-
-        <span class="sec-num">1</span>
-
-        <h2 class="sec-title" id="title-sec1">
-          Zasady Ogólne.
-        </h2>
-
-      </header>
-
-      <ol>
-
-        <li>
-          <span class="mk">01</span>
-          <span class="tx" id="rule-1-1">
-            Zakaz gore i pornografii we wszystkich gatunkach. Tak samo zakaz dziadków z trzema chujami (pls).
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">02</span>
-          <span class="tx" id="rule-1-2">
-            Zakazane jest wrzucanie zdjęć i gifów przedstawiających łamania prawa z udziałem nieletnich (te śmieszne można, ale nie wszystkie).
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">03</span>
-          <span class="tx" id="rule-1-3">
-            Zakaz przemocy ludzkiej oraz zwierzęcej lub treści, które pokazują znęcanie się nad zwierzętami, even jeśli to zwykły mem.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">04</span>
-          <span class="tx" id="rule-1-4">
-            Spamowanie linkami, gifami lub zdjęciami jest na serwerze niedozwolone.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">05</span>
-          <span class="tx" id="rule-1-5">
-            Celowe wysyłanie zdjęć ludzi lub dzieci (niebędących uczestnikami serwera) w celu obrażenia kogoś jest niedozwolone.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">06</span>
-          <span class="tx" id="rule-1-6">
-            Wysyłanie zdjęć uczestników serwera jest legalne, ale jeśli zdjęcie ma obraźliwy sens lub autor miał złe intencje, jest to niedozwolone.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">07</span>
-          <span class="tx" id="rule-1-7">
-            Zakaz reklamowania się (żadne kanały o DBD czy Deltarune). Reklama jest dozwolona tylko wtedy, gdy moderator wyda na nią wyraźną zgodę.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">08</span>
-          <span class="tx" id="rule-1-8">
-            Zakaz chwalenia Deltarune w jakikolwiek sposób. Dozwolone jest tylko i wyłącznie informowanie o tej grze.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">09</span>
-          <span class="tx" id="rule-1-9">
-            Bullying na serwerze jest karalny, ale zwykły ragebait się do tego nie zalicza.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">10</span>
-          <span class="tx" id="rule-1-10">
-            Korzystanie z Soundpada i dźwięków na serwerze musi być delikatne wobec innych członków.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">11</span>
-          <span class="tx" id="rule-1-11">
-            Jeśli treść wiadomości lub dialogu może kogoś obrazić (i nie jest to ragebait), wiadomość zostanie usunięta, a uczestnik ukarany zeusem.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">12</span>
-          <span class="tx" id="rule-1-12">
-            Celowe prowokowanie administracji jest karalne nadaniem roli RUSEK, która ogranicza wysyłanie wiadomości. Przykładem prowokacji jest wyłącznie celowe niedbaniem o regulaminu.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">13</span>
-          <span class="tx" id="rule-1-13">
-            Wyznawanie, że czyjaś religia jest lepsza od mojej, jest karalne tak samo jak propaganda religijna.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">14</span>
-          <span class="tx" id="rule-1-14">
-            Próba wmówienia komuś, że 2 część Subnautici jest inna niż 1, jest absurdalna, ale karalna nie jest.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">15</span>
-          <span class="tx" id="rule-1-15">
-            Celowe obrażanie członków serwera lub sabotowanie poprzez przezywanie serwera jest smutne dla administracji :(
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">16</span>
-          <span
-            class="tx"
-            id="rule-1-16"
-            style="font-weight:700;color:var(--crimson-soft)">
-            NIKT NIE MOŻE ZAJĄĆ ŚWIĘTEGO MIEJSCA ADMINISTRACJI, ADMINISTRACJA JEST NAJLEPSZA I TYLKO JEDNA!!!
-          </span>
-        </li>
-
-      </ol>
-
-    </article>
-
-    <!-- =========================
-         SYSTEM KAR
-         ========================= -->
-
-    <article class="sec" id="system-kar">
-
-      <header class="sec-head">
-
-        <span class="sec-num">2</span>
-
-        <h2 class="sec-title" id="title-sec2">
-          System Kar.
-        </h2>
-
-      </header>
-
-      <ol>
-
-        <li>
-          <span class="mk">01</span>
-          <span class="tx" id="rule-2-1">
-            Kary są wymierzane przez administrację. Przypadkowe wiadomości naruszające zasady nie są karane, ale członek serwera od razu zostaje poinformowany o błędzie.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">02</span>
-          <span class="tx" id="rule-2-2">
-            Ponowne wysyłanie rzeczy niezgodnych z regulaminem kończy się ich usunięciem i wymierzeniem kary.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">03</span>
-          <span
-            class="tx"
-            id="rule-2-3"
-            style="text-shadow:0 0 10px rgba(180,31,31,.5)">
-            Jeśli członek serwera płacze ze smutku, jest obrażony na administrację i z tego powodu wysyła porno,
-            <strong id="rule-2-3-strong">
-              ZOSTAJE POWIESZONY I DOSTAJE NAJWIĘKSZĄ KARĘ Z MOŻLIWYCH
-            </strong>.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">04</span>
-          <span class="tx" id="rule-2-4">
-            Przerwa trwa maksymalnie 60 sek, 1 min, 10 min, 1 godz lub 24 godz. Kara przerwy jest wyznaczana schodkami, czyli od najmniejszego do największego czasu.
-          </span>
-        </li>
-
-      </ol>
-
-    </article>
-
-    <!-- =========================
-         POSTANOWIENIA
-         ========================= -->
-
-    <article class="sec" id="postanowienia-koncowe">
-
-      <header class="sec-head">
-
-        <span class="sec-num">3</span>
-
-        <h2 class="sec-title" id="title-sec3">
-          Postanowienia Końcowe.
-        </h2>
-
-      </header>
-
-      <ol>
-
-        <li>
-          <span class="mk">01</span>
-          <span class="tx" id="rule-3-1">
-            Kwestie nieujęte w regulaminie rozpatrywane są indywidualnie przez !!!Administrację!!!
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">02</span>
-          <span class="tx" id="rule-3-2">
-            Regulamin wchodzi w życie w momencie jego utworzenia lub zmiany.
-          </span>
-        </li>
-
-        <li>
-          <span class="mk">03</span>
-          <span class="tx" id="rule-3-3">
-            Administracja zastrzega sobie prawo do zmiany regulaminu w dowolnym momencie, respektując główną zasadę.
-          </span>
-        </li>
-
-      </ol>
-
-    </article>
-
-  </section>
-
-  <!-- =========================
-       FINAL
-       ========================= -->
-
-  <section class="final">
-
-    <h3 id="final-header">
-      ROZUMIESZ ZASADY?
-      <br/>
-      <span id="final-subheader">
-        Wbijaj na serwer.
-      </span>
-    </h3>
+  <!-- LOGIN JEST POZA site-nav I DZIĘKI TEMU JEST CAŁKOWICIE PO PRAWEJ -->
+  <div id="login-box">
 
     <a
-      class="cta xl"
-      href="https://discord.gg/fFWYwGB8jv"
-      target="_blank"
-      rel="noopener">
-
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19.27 4.73A19.56 19.56 0 0 0 15.65 3.4a.05.05 0 0 0-.05.03c-.32.57-.67 1.19-.92 1.76a18 18 0 0 0-5.36 0c-.25-.57-.61-1.19-.93-1.76a.05.05 0 0 0-.05-.03 19.56 19.56 0 0 0-3.62 1.33.05.05 0 0 0-.02.02C1.3 9.4 1 13.9 1.43 18.36a.05.05 0 0 0 .02.04 19.78 19.78 0 0 0 5.94 2.97.05.05 0 0 0 .06-.02c.46-.62.87-1.28 1.22-1.97a.05.05 0 0 0-.03-.07c-.63-.24-1.23-.53-1.8-.87a.05.05 0 0 1 0-.08c.12-.09.25-.19.37-.29a.05.05 0 0 1 .05-.01 14.15 14.15 0 0 0 11.48 0a.05.05 0 0 1 .05.01c.12.1.25.2.37.29a.05.05 0 0 1 0 .08c-.57.34-1.17.63-1.8.87a.05.05 0 0 0-.03.07c.35.69.76 1.35 1.22 1.97a.05.05 0 0 0 .06.02 19.78 19.78 0 0 0 5.94-2.97.05.05 0 0 0 .02-.04c.5-5.1-.84-9.56-3.23-13.61a.05.05 0 0 0-.02-.02zM8.52 14.85c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4zm6.96 0c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4z"/>
-      </svg>
-
-      <span id="btn-final-join">
-        Dołącz do caption.gif
-      </span>
-
+      id="discord-login"
+      href="/api/auth/discord/login"
+    >
+      Login Discord
     </a>
-
-    <p class="hint" id="final-hint">
-      Klikając przycisk akceptujesz powyższy regulamin.
-    </p>
-
-  </section>
-
-  <!-- =========================
-       GEOMETRIA
-       ========================= -->
-
-  <div class="toggle-wrapper">
-
-    <button
-      class="btn-toggle-geo"
-      id="toggle-geo-btn">
-      Wyłącz geometrię
-    </button>
 
   </div>
 
-  <!-- =========================
-       FOOTER
-       ========================= -->
+  <div
+    class="updates-panel"
+    id="updates-panel"
+    hidden
+  >
 
-  <footer>
+    <h2>Historia aktualizacji</h2>
 
-    <div class="footer-container">
+    <article class="version-entry">
 
-      <div class="lang-btns">
+      <h3>v0.1.0 — 05.08.2026</h3>
 
-        <button
-          class="btn-flag active"
-          id="lang-pl-btn"
-          aria-label="Język Polski">
-        </button>
+      <ul>
+        <li>Dodano górne menu: Regulamin, ??? i Gra.</li>
+        <li>Usunięto pierwszy przycisk Discorda i starą minigrę.</li>
+        <li>Powiększono oraz zmieniono na czerwony przycisk „Czytaj regulamin”.</li>
+        <li>Dodano pasek aktualnej wersji strony.</li>
+      </ul>
 
-        <button
-          class="btn-flag"
-          id="lang-ua-btn"
-          aria-label="Українська мова">
-        </button>
+    </article>
 
-      </div>
+  </div>
 
-      <div>
+</header>
 
-        <span id="footer-copy">
-          © caption.gif
+<!-- =========================
+     HERO
+     ========================= -->
+
+<section class="hero">
+
+  <h1 class="title">
+
+    <span
+      class="l1"
+      id="hero-title-l1"
+    >
+      REGULAMIN
+    </span>
+
+    <span class="l2">
+      caption.gif
+    </span>
+
+  </h1>
+
+  <p
+    class="lead"
+    id="hero-lead"
+  >
+    Zanim połączysz swój głos z Chórem i przekroczysz Próg Sanktuarium musisz przyjąć Święty Kanon który bezwzględnie wiąże każdego nowego wyznawcę. Wejście tutaj oznacza całkowite odcięcie od dawnego życia rodziny przyjaciół i dotychczasowych nawyków ponieważ od teraz Twój czas Twoje decyzje oraz cały Twój majątek należą wyłącznie do Przewodnika. AMEN NAMASTE AMEN!!!
+  </p>
+
+  <div class="actions">
+
+    <a
+      class="cta read-rules"
+      href="#tresc"
+      id="btn-read-rules"
+    >
+      Czytaj regulamin ↓
+    </a>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     SPIS TREŚCI
+     ========================= -->
+
+<nav
+  class="toc"
+  aria-label="Spis treści"
+>
+
+  <span
+    class="toc-lbl"
+    id="toc-label"
+  >
+    SPIS&nbsp;TREŚCI
+  </span>
+
+  <ol>
+
+    <li>
+      <a href="#zasady-ogolne">
+        <span class="n">1.</span>
+        <span
+          class="t"
+          id="toc-sec1"
+        >
+          Zasady Ogólne.
         </span>
+      </a>
+    </li>
 
-        <span class="d">●</span>
-
-        <span id="footer-text">
-          Regulamin serwera Discord
+    <li>
+      <a href="#system-kar">
+        <span class="n">2.</span>
+        <span
+          class="t"
+          id="toc-sec2"
+        >
+          System Kar.
         </span>
+      </a>
+    </li>
 
-      </div>
+    <li>
+      <a href="#postanowienia-koncowe">
+        <span class="n">3.</span>
+        <span
+          class="t"
+          id="toc-sec3"
+        >
+          Postanowienia Końcowe.
+        </span>
+      </a>
+    </li>
+
+  </ol>
+
+</nav>
+
+<!-- =========================
+     TREŚĆ
+     ========================= -->
+
+<section
+  class="content"
+  id="tresc"
+>
+
+<!-- SEKCJA 1 -->
+
+<article
+  class="sec"
+  id="zasady-ogolne"
+>
+
+  <header class="sec-head">
+
+    <span class="sec-num">1</span>
+
+    <h2
+      class="sec-title"
+      id="title-sec1"
+    >
+      Zasady Ogólne.
+    </h2>
+
+  </header>
+
+  <ol>
+
+    <li>
+      <span class="mk">01</span>
+      <span
+        class="tx"
+        id="rule-1-1"
+      >
+        Zakaz gore i pornografii we wszystkich gatunkach. Tak samo zakaz dziadków z trzema chujami (pls).
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">02</span>
+      <span
+        class="tx"
+        id="rule-1-2"
+      >
+        Zakazane jest wrzucanie zdjęć i gifów przedstawiających łamania prawa z udziałem nieletnich (te śmieszne można, ale nie wszystkie).
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">03</span>
+      <span
+        class="tx"
+        id="rule-1-3"
+      >
+        Zakaz przemocy ludzkiej oraz zwierzęcej lub treści, które pokazują znęcanie się nad zwierzętami, even jeśli to zwykły mem.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">04</span>
+      <span
+        class="tx"
+        id="rule-1-4"
+      >
+        Spamowanie linkami, gifami lub zdjęciami jest na serwerze niedozwolone.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">05</span>
+      <span
+        class="tx"
+        id="rule-1-5"
+      >
+        Celowe wysyłanie zdjęć ludzi lub dzieci (niebędących uczestnikami serwera) w celu obrażenia kogoś jest niedozwolone.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">06</span>
+      <span
+        class="tx"
+        id="rule-1-6"
+      >
+        Wysyłanie zdjęć uczestników serwera jest legalne, ale jeśli zdjęcie ma obraźliwy sens lub autor miał złe intencje, jest to niedozwolone.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">07</span>
+      <span
+        class="tx"
+        id="rule-1-7"
+      >
+        Zakaz reklamowania się (żadne kanały o DBD czy Deltarune). Reklama jest dozwolona tylko wtedy, gdy moderator wyda na nią wyraźną zgodę.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">08</span>
+      <span
+        class="tx"
+        id="rule-1-8"
+      >
+        Zakaz chwalenia Deltarune w jakikolwiek sposób. Dozwolone jest tylko i wyłącznie informowanie o tej grze.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">09</span>
+      <span
+        class="tx"
+        id="rule-1-9"
+      >
+        Bullying na serwerze jest karalny, ale zwykły ragebait się do tego nie zalicza.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">10</span>
+      <span
+        class="tx"
+        id="rule-1-10"
+      >
+        Korzystanie z Soundpada i dźwięków na serwerze musi być delikatne wobec innych członków.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">11</span>
+      <span
+        class="tx"
+        id="rule-1-11"
+      >
+        Jeśli treść wiadomości lub dialogu może kogoś obrazić (i nie jest to ragebait), wiadomość zostanie usunięta, a uczestnik ukarany zeusem.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">12</span>
+      <span
+        class="tx"
+        id="rule-1-12"
+      >
+        Celowe prowokowanie administracji jest karalne nadaniem roli RUSEK, która ogranicza wysyłanie wiadomości. Przykładem prowokacji jest wyłącznie celowe niedbaniem o regulaminu.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">13</span>
+      <span
+        class="tx"
+        id="rule-1-13"
+      >
+        Wyznawanie, że czyjaś religia jest lepsza od mojej, jest karalne tak samo jak propaganda religijna.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">14</span>
+      <span
+        class="tx"
+        id="rule-1-14"
+      >
+        Próba wmówienia komuś, że 2 część Subnautici jest inna niż 1, jest absurdalna, ale karalna nie jest.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">15</span>
+      <span
+        class="tx"
+        id="rule-1-15"
+      >
+        Celowe obrażanie członków serwera lub sabotowanie poprzez przezywanie serwera jest smutne dla administracji :(
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">16</span>
+      <span
+        class="tx"
+        id="rule-1-16"
+        style="font-weight:700;color:var(--crimson-soft);"
+      >
+        NIKT NIE MOŻE ZAJĄĆ ŚWIĘTEGO MIEJSCA ADMINISTRACJI, ADMINISTRACJA JEST NAJLEPSZA I TYLKO JEDNA!!!
+      </span>
+    </li>
+
+  </ol>
+
+</article>
+
+<!-- SEKCJA 2 -->
+
+<article
+  class="sec"
+  id="system-kar"
+>
+
+  <header class="sec-head">
+
+    <span class="sec-num">2</span>
+
+    <h2
+      class="sec-title"
+      id="title-sec2"
+    >
+      System Kar.
+    </h2>
+
+  </header>
+
+  <ol>
+
+    <li>
+      <span class="mk">01</span>
+      <span
+        class="tx"
+        id="rule-2-1"
+      >
+        Kary są wymierzane przez administrację. Przypadkowe wiadomości naruszające zasady nie są karane, ale członek serwera od razu zostaje poinformowany o błędzie.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">02</span>
+      <span
+        class="tx"
+        id="rule-2-2"
+      >
+        Ponowne wysyłanie rzeczy niezgodnych z regulaminem kończy się ich usunięciem i wymierzeniem kary.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">03</span>
+
+      <span
+        class="tx"
+        id="rule-2-3"
+        style="text-shadow:0 0 10px rgba(180,31,31,.5);"
+      >
+        Jeśli członek serwera płacze ze smutku, jest obrażony na administrację i z tego powodu wysyła porno,
+
+        <strong id="rule-2-3-strong">
+          ZOSTAJE POWIESZONY I DOSTAJE NAJWIĘKSZĄ KARĘ Z MOŻLIWYCH
+        </strong>.
+      </span>
+
+    </li>
+
+    <li>
+      <span class="mk">04</span>
+      <span
+        class="tx"
+        id="rule-2-4"
+      >
+        Przerwa trwa maksymalnie 60 sek, 1 min, 10 min, 1 godz lub 24 godz. Kara przerwy jest wyznaczana schodkami, czyli od najmniejszego do największego czasu.
+      </span>
+    </li>
+
+  </ol>
+
+</article>
+
+<!-- SEKCJA 3 -->
+
+<article
+  class="sec"
+  id="postanowienia-koncowe"
+>
+
+  <header class="sec-head">
+
+    <span class="sec-num">3</span>
+
+    <h2
+      class="sec-title"
+      id="title-sec3"
+    >
+      Postanowienia Końcowe.
+    </h2>
+
+  </header>
+
+  <ol>
+
+    <li>
+      <span class="mk">01</span>
+      <span
+        class="tx"
+        id="rule-3-1"
+      >
+        Kwestie nieujęte w regulaminie rozpatrywane są indywidualnie przez !!!Administrację!!!
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">02</span>
+      <span
+        class="tx"
+        id="rule-3-2"
+      >
+        Regulamin wchodzi w życie w momencie jego utworzenia lub zmiany.
+      </span>
+    </li>
+
+    <li>
+      <span class="mk">03</span>
+      <span
+        class="tx"
+        id="rule-3-3"
+      >
+        Administracja zastrzega sobie prawo do zmiany regulaminu w dowolnym momencie, respektując główną zasadę.
+      </span>
+    </li>
+
+  </ol>
+
+</article>
+
+</section>
+
+<!-- =========================
+     FINAL
+     ========================= -->
+
+<section class="final">
+
+  <h3 id="final-header">
+    ROZUMIESZ ZASADY?
+    <br/>
+    <span id="final-subheader">
+      Wbijaj na serwer.
+    </span>
+  </h3>
+
+  <a
+    class="cta xl"
+    href="https://discord.gg/fFWYwGB8jv"
+    target="_blank"
+    rel="noopener"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M19.27 4.73A19.56 19.56 0 0 0 15.65 3.4a.05.05 0 0 0-.05.03c-.32.57-.67 1.19-.92 1.76a18 18 0 0 0-5.36 0c-.25-.57-.61-1.19-.93-1.76a.05.05 0 0 0-.05-.03 19.56 19.56 0 0 0-3.62 1.33.05.05 0 0 0-.02.02C1.3 9.4 1 13.9 1.43 18.36a.05.05 0 0 0 .02.04 19.78 19.78 0 0 0 5.94 2.97.05.05 0 0 0 .06-.02c.46-.62.87-1.28 1.22-1.97a.05.05 0 0 0-.03-.07c-.63-.24-1.23-.53-1.8-.87a.05.05 0 0 1 0-.08c.12-.09.25-.19.37-.29a.05.05 0 0 1 .05-.01 14.15 14.15 0 0 0 11.48 0a.05.05 0 0 1 .05.01c.12.1.25.2.37.29a.05.05 0 0 1 0 .08c-.57.34-1.17.63-1.8.87a.05.05 0 0 0-.03.07c.35.69.76 1.35 1.22 1.97a.05.05 0 0 0 .06.02 19.78 19.78 0 0 0 5.94-2.97.05.05 0 0 0 .02-.04c.5-5.1-.84-9.56-3.23-13.61a.05.05 0 0 0-.02-.02zM8.52 14.85c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4zm6.96 0c-1.18 0-2.15-1.07-2.15-2.4a2.14 2.14 0 0 1 2.15-2.4c1.2 0 2.16 1.08 2.15 2.4 0 1.33-.95 2.4-2.15 2.4z"/>
+    </svg>
+
+    <span id="btn-final-join">
+      Dołącz do caption.gif
+    </span>
+
+  </a>
+
+  <p
+    class="hint"
+    id="final-hint"
+  >
+    Klikając przycisk akceptujesz powyższy regulamin.
+  </p>
+
+</section>
+
+<!-- =========================
+     GEOMETRIA
+     ========================= -->
+
+<div class="toggle-wrapper">
+
+  <button
+    class="btn-toggle-geo"
+    id="toggle-geo-btn"
+  >
+    Wyłącz geometrię
+  </button>
+
+</div>
+
+<!-- =========================
+     FOOTER
+     ========================= -->
+
+<footer>
+
+  <div class="footer-container">
+
+    <div class="lang-btns">
+
+      <button
+        class="btn-flag active"
+        id="lang-pl-btn"
+        aria-label="Język Polski"
+      ></button>
+
+      <button
+        class="btn-flag"
+        id="lang-ua-btn"
+        aria-label="Українська мова"
+      ></button>
 
     </div>
 
-  </footer>
+    <div>
+
+      <span id="footer-copy">
+        © caption.gif
+      </span>
+
+      <span class="d">
+        ●
+      </span>
+
+      <span id="footer-text">
+        Regulamin serwera Discord
+      </span>
+
+    </div>
+
+  </div>
+
+</footer>
 
 </main>
 
 <!-- =========================
-     HEADER
+     HEADER SCROLL
      ========================= -->
 
 <script>
@@ -1475,7 +1628,7 @@ window.addEventListener(
 </script>
 
 <!-- =========================
-     HISTORIA AKTUALIZACJI
+     UPDATE PANEL
      ========================= -->
 
 <script>
@@ -1486,18 +1639,22 @@ const updatesToggle =
 const updatesPanel =
   document.getElementById("updates-panel");
 
-updatesToggle.addEventListener("click", () => {
+updatesToggle.addEventListener(
+  "click",
+  () => {
 
-  const isOpen = !updatesPanel.hidden;
+    const isOpen =
+      !updatesPanel.hidden;
 
-  updatesPanel.hidden = isOpen;
+    updatesPanel.hidden = isOpen;
 
-  updatesToggle.setAttribute(
-    "aria-expanded",
-    String(!isOpen)
-  );
+    updatesToggle.setAttribute(
+      "aria-expanded",
+      String(!isOpen)
+    );
 
-});
+  }
+);
 
 </script>
 
@@ -1517,14 +1674,17 @@ const toggleBtn =
   document.getElementById("toggle-geo-btn");
 
 let isGeometryVisible = true;
+
 let animationFrameId = null;
 
 function resizeCanvas(){
 
-  canvas.width = window.innerWidth;
+  canvas.width =
+    window.innerWidth;
 
   canvas.height =
     canvas.parentElement.scrollHeight;
+
 }
 
 window.addEventListener(
@@ -1571,12 +1731,20 @@ function createShape(){
 
     vy:
       (Math.random() - .5) * 1
+
   };
+
 }
 
-for(let i = 0; i < numShapes; i++){
+for(
+  let i = 0;
+  i < numShapes;
+  i++
+){
 
-  shapes.push(createShape());
+  shapes.push(
+    createShape()
+  );
 
 }
 
@@ -1586,7 +1754,9 @@ function drawShape(shape){
     canvas.width / 2;
 
   const distanceFromCenter =
-    Math.abs(shape.x - screenCenterX);
+    Math.abs(
+      shape.x - screenCenterX
+    );
 
   const safeZone =
     Math.min(
@@ -1596,14 +1766,21 @@ function drawShape(shape){
 
   let textMaskAlpha = 1;
 
-  if(distanceFromCenter < safeZone){
+  if(
+    distanceFromCenter < safeZone
+  ){
 
     textMaskAlpha =
       distanceFromCenter / safeZone;
+
   }
 
-  if(textMaskAlpha <= .05){
+  if(
+    textMaskAlpha <= .05
+  ){
+
     return;
+
   }
 
   ctx.save();
@@ -1613,7 +1790,9 @@ function drawShape(shape){
     shape.y
   );
 
-  ctx.rotate(shape.angle);
+  ctx.rotate(
+    shape.angle
+  );
 
   const currentPulse =
     Math.sin(shape.pulse);
@@ -1661,7 +1840,9 @@ function drawShape(shape){
         curX,
         curY
       );
+
     }
+
   }
 
   ctx.closePath();
@@ -1679,12 +1860,15 @@ function drawShape(shape){
   ctx.stroke();
 
   ctx.restore();
+
 }
 
 function animate(){
 
   if(!isGeometryVisible){
+
     return;
+
   }
 
   ctx.clearRect(
@@ -1694,37 +1878,67 @@ function animate(){
     canvas.height
   );
 
-  shapes.forEach(shape => {
+  shapes.forEach(
+    shape => {
 
-    shape.x += shape.vx;
-    shape.y += shape.vy;
-    shape.angle += shape.rotationSpeed;
-    shape.pulse += shape.pulseSpeed;
+      shape.x += shape.vx;
 
-    if(shape.x < -shape.size){
-      shape.x =
-        canvas.width + shape.size;
+      shape.y += shape.vy;
+
+      shape.angle +=
+        shape.rotationSpeed;
+
+      shape.pulse +=
+        shape.pulseSpeed;
+
+      if(
+        shape.x < -shape.size
+      ){
+
+        shape.x =
+          canvas.width + shape.size;
+
+      }
+
+      if(
+        shape.x >
+        canvas.width + shape.size
+      ){
+
+        shape.x =
+          -shape.size;
+
+      }
+
+      if(
+        shape.y < -shape.size
+      ){
+
+        shape.y =
+          canvas.height + shape.size;
+
+      }
+
+      if(
+        shape.y >
+        canvas.height + shape.size
+      ){
+
+        shape.y =
+          -shape.size;
+
+      }
+
+      drawShape(shape);
+
     }
-
-    if(shape.x > canvas.width + shape.size){
-      shape.x = -shape.size;
-    }
-
-    if(shape.y < -shape.size){
-      shape.y =
-        canvas.height + shape.size;
-    }
-
-    if(shape.y > canvas.height + shape.size){
-      shape.y = -shape.size;
-    }
-
-    drawShape(shape);
-
-  });
+  );
 
   animationFrameId =
-    requestAnimationFrame(animate);
+    requestAnimationFrame(
+      animate
+    );
+
 }
 
 toggleBtn.addEventListener(
@@ -1734,9 +1948,13 @@ toggleBtn.addEventListener(
     isGeometryVisible =
       !isGeometryVisible;
 
-    if(isGeometryVisible){
+    if(
+      isGeometryVisible
+    ){
 
-      canvas.classList.remove("hidden");
+      canvas.classList.remove(
+        "hidden"
+      );
 
       toggleBtn.textContent =
         currentLang === "pl"
@@ -1747,7 +1965,9 @@ toggleBtn.addEventListener(
 
     }else{
 
-      canvas.classList.add("hidden");
+      canvas.classList.add(
+        "hidden"
+      );
 
       toggleBtn.textContent =
         currentLang === "pl"
@@ -1759,22 +1979,27 @@ toggleBtn.addEventListener(
         cancelAnimationFrame(
           animationFrameId
         );
+
       }
 
-      setTimeout(() => {
+      setTimeout(
+        () => {
 
-        if(!isGeometryVisible){
+          if(!isGeometryVisible){
 
-          ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-          );
+            ctx.clearRect(
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            );
 
-        }
+          }
 
-      },400);
+        },
+        400
+      );
+
     }
 
   }
@@ -1917,6 +2142,7 @@ const translations = {
 
     btn_geo_on:
       "Włącz geometrię"
+
   },
 
   ua: {
@@ -2044,6 +2270,7 @@ const translations = {
 
     btn_geo_on:
       "Увімкнути геометрію"
+
   }
 
 };
@@ -2107,21 +2334,24 @@ function setLanguage(lang){
     "title-sec3"
   ).textContent = t.title_sec3;
 
-  for(let i = 1; i <= 16; i++){
+  for(let i=1;i<=16;i++){
 
     document.getElementById(
       `rule-1-${i}`
     ).textContent =
       t[`rule_1_${i}`];
+
   }
 
   document.getElementById(
     "rule-2-1"
-  ).textContent = t.rule_2_1;
+  ).textContent =
+    t.rule_2_1;
 
   document.getElementById(
     "rule-2-2"
-  ).textContent = t.rule_2_2;
+  ).textContent =
+    t.rule_2_2;
 
   document.getElementById(
     "rule-2-3"
@@ -2131,51 +2361,70 @@ function setLanguage(lang){
 
   document.getElementById(
     "rule-2-4"
-  ).textContent = t.rule_2_4;
+  ).textContent =
+    t.rule_2_4;
 
   document.getElementById(
     "rule-3-1"
-  ).textContent = t.rule_3_1;
+  ).textContent =
+    t.rule_3_1;
 
   document.getElementById(
     "rule-3-2"
-  ).textContent = t.rule_3_2;
+  ).textContent =
+    t.rule_3_2;
 
   document.getElementById(
     "rule-3-3"
-  ).textContent = t.rule_3_3;
+  ).textContent =
+    t.rule_3_3;
 
-  document.getElementById(
-    "final-header"
-  ).innerHTML =
+  const finalHeader =
+    document.getElementById(
+      "final-header"
+    );
+
+  finalHeader.innerHTML =
     t.final_header +
-    `<br><span id="final-subheader">${t.final_subheader}</span>`;
+    `<br/><span id="final-subheader">${t.final_subheader}</span>`;
 
   document.getElementById(
     "btn-final-join"
-  ).textContent = t.btn_final_join;
+  ).textContent =
+    t.btn_final_join;
 
   document.getElementById(
     "final-hint"
-  ).textContent = t.final_hint;
+  ).textContent =
+    t.final_hint;
 
   document.getElementById(
     "footer-text"
-  ).textContent = t.footer_text;
+  ).textContent =
+    t.footer_text;
 
-  toggleBtn.textContent =
-    isGeometryVisible
-      ? t.btn_geo_off
-      : t.btn_geo_on;
+  if(isGeometryVisible){
+
+    toggleBtn.textContent =
+      t.btn_geo_off;
+
+  }else{
+
+    toggleBtn.textContent =
+      t.btn_geo_on;
+
+  }
 
   if(lang === "pl"){
 
     plBtn.classList.add("active");
+
     uaBtn.classList.remove("active");
 
   }else{
 
     uaBtn.classList.add("active");
+
     plBtn.classList.remove("active");
 
   }
@@ -2203,232 +2452,134 @@ uaBtn.addEventListener(
 async function checkDiscordUser(){
 
   const loginBox =
-    document.getElementById("login-box");
+    document.getElementById(
+      "login-box"
+    );
 
   try{
-
-    /*
-      1. Najpierw próbujemy pobrać
-         użytkownika z backendu.
-    */
 
     const response =
       await fetch(
         "/api/auth/user",
         {
-          credentials:"include"
+          credentials:"include",
+          cache:"no-store"
         }
       );
 
-    if(response.ok){
+    if(!response.ok){
 
-      const user =
-        await response.json();
+      return;
 
-      if(user && user.loggedIn){
-
-        showLoggedUser(user);
-
-        return;
-      }
     }
+
+    const user =
+      await response.json();
+
+    if(
+      !user ||
+      !user.loggedIn
+    ){
+
+      return;
+
+    }
+
+    let avatar =
+      user.avatar;
+
+    if(
+      !avatar &&
+      user.id &&
+      user.avatarHash
+    ){
+
+      avatar =
+        `https://cdn.discordapp.com/avatars/${user.id}/${user.avatarHash}.png?size=64`;
+
+    }
+
+    if(
+      !avatar &&
+      user.id &&
+      user.avatar
+    ){
+
+      avatar =
+        `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`;
+
+    }
+
+    if(!avatar){
+
+      avatar =
+        "https://cdn.discordapp.com/embed/avatars/0.png";
+
+    }
+
+    const username =
+      user.username ||
+      user.global_name ||
+      user.displayName ||
+      "Discord";
+
+    loginBox.innerHTML = `
+
+      <div id="logged-user">
+
+        <img
+          id="discord-avatar"
+          src="${avatar}"
+          alt="Avatar"
+          onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'"
+        >
+
+        <span id="discord-username">
+          ${escapeHtml(username)}
+        </span>
+
+        <button
+          id="logout-btn"
+          type="button"
+        >
+          Wyloguj
+        </button>
+
+      </div>
+
+    `;
+
+    document
+      .getElementById("logout-btn")
+      .addEventListener(
+        "click",
+        logoutDiscord
+      );
 
   }catch(error){
 
     console.log(
-      "Nie udało się pobrać sesji Discord."
-    );
-  }
-
-  /*
-    2. Fallback:
-       callback Discorda przekierowuje
-       na /?user=...
-  */
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const userParam =
-    params.get("user");
-
-  if(userParam){
-
-    try{
-
-      const user =
-        JSON.parse(
-          decodeURIComponent(userParam)
-        );
-
-      /*
-        Zapisujemy użytkownika lokalnie,
-        żeby był widoczny po odświeżeniu.
-      */
-
-      localStorage.setItem(
-        "discord_user",
-        JSON.stringify(user)
-      );
-
-      showLoggedUser(user);
-
-      /*
-        Usuwamy ?user=... z adresu.
-      */
-
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname
-      );
-
-      return;
-
-    }catch(error){
-
-      console.error(
-        "Błąd danych Discord:",
-        error
-      );
-    }
-  }
-
-  /*
-    3. Ostatni fallback:
-       localStorage.
-  */
-
-  try{
-
-    const saved =
-      localStorage.getItem(
-        "discord_user"
-      );
-
-    if(saved){
-
-      const user =
-        JSON.parse(saved);
-
-      showLoggedUser(user);
-    }
-
-  }catch(error){
-
-    console.error(
-      "Błąd localStorage:",
+      "Nie zalogowano.",
       error
     );
+
   }
+
 }
-
-
-function showLoggedUser(user){
-
-  const loginBox =
-    document.getElementById("login-box");
-
-  if(!user || !user.id){
-    return;
-  }
-
-  let avatar;
-
-  /*
-    Discord avatar:
-    jeśli użytkownik ma avatar,
-    używamy jego avatara.
-  */
-
-  if(user.avatar){
-
-    avatar =
-      `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`;
-
-  }else{
-
-    /*
-      Domyślny avatar Discorda.
-    */
-
-    const discriminator =
-      user.discriminator &&
-      user.discriminator !== "0"
-        ? Number(user.discriminator) % 5
-        : Number(BigInt(user.id) >> 22n) % 6;
-
-    avatar =
-      `https://cdn.discordapp.com/embed/avatars/${discriminator}.png`;
-  }
-
-  const username =
-    user.global_name ||
-    user.username ||
-    "Użytkownik";
-
-  loginBox.innerHTML = `
-
-    <div class="user-menu">
-
-      <img
-        class="user-avatar"
-        src="${avatar}"
-        alt="Avatar użytkownika"
-      >
-
-      <span class="user-name">
-        ${escapeHtml(username)}
-      </span>
-
-      <button
-        class="logout-btn"
-        id="logout-btn"
-        type="button">
-        Wyloguj
-      </button>
-
-    </div>
-
-  `;
-
-  document
-    .getElementById("logout-btn")
-    .addEventListener(
-      "click",
-      logoutDiscord
-    );
-}
-
 
 function escapeHtml(text){
 
   const div =
     document.createElement("div");
 
-  div.textContent = text;
+  div.textContent =
+    text;
 
   return div.innerHTML;
+
 }
 
-
 async function logoutDiscord(){
-
-  /*
-    Czyścimy lokalne dane.
-  */
-
-  localStorage.removeItem(
-    "discord_user"
-  );
-
-  /*
-    Jeśli masz endpoint /api/auth/logout,
-    próbujemy również wylogować sesję
-    po stronie serwera.
-  */
 
   try{
 
@@ -2443,18 +2594,22 @@ async function logoutDiscord(){
   }catch(error){
 
     console.log(
-      "Brak endpointu logout lub sesja już wygasła."
+      "Logout API niedostępne."
     );
+
   }
 
-  /*
-    Wracamy na czystą stronę.
-  */
+  document.cookie =
+    "discord_user=; Path=/; Max-Age=0; SameSite=Lax";
+
+  localStorage.removeItem(
+    "discord_user"
+  );
 
   window.location.href =
-    window.location.pathname;
-}
+    "/";
 
+}
 
 checkDiscordUser();
 
