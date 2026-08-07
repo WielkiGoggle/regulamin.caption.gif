@@ -784,42 +784,36 @@ async function checkDiscordUser() {
 }
 
 checkDiscordUser();
-</script>
-  <script>
+<script>
 const cookies = document.cookie.split("; ");
-
 const userCookie = cookies.find(row => row.startsWith("discord_user="));
 
 if (userCookie) {
-  const user = JSON.parse(
-    decodeURIComponent(userCookie.split("=")[1])
-  );
+  try {
+    const user = JSON.parse(
+      decodeURIComponent(userCookie.split("=")[1])
+    );
 
-  const avatar = user.avatar
-    ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
-    : "https://cdn.discordapp.com/embed/avatars/0.png";
+    const avatar = user.avatar
+      ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+      : "https://cdn.discordapp.com/embed/avatars/0.png";
 
-  document.getElementById("login-box").innerHTML = `
-    <div style="
-      display:flex;
-      align-items:center;
-      gap:8px;
-      background:#b41f1f;
-      padding:8px 15px;
-      border-radius:7px;
-      color:white;
-      font-family:Arial;
-      font-weight:bold;
-    ">
-      <img src="${avatar}"
-      style="
-        width:28px;
-        height:28px;
-        border-radius:50%;
-      ">
-      <span>${user.username}</span>
-    </div>
-  `;
+    document.getElementById("login-box").innerHTML = `
+      <div>
+        <img src="${avatar}" alt="Avatar">
+        <span>${user.username}</span>
+        <button id="logout-btn" type="button">Wyloguj</button>
+      </div>
+    `;
+
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      document.cookie = "discord_user=; Path=/; Max-Age=0; SameSite=Lax";
+      window.location.reload();
+    });
+
+  } catch (error) {
+    console.error("Błąd danych użytkownika:", error);
+  }
 }
 </script>
 </body>
