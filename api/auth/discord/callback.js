@@ -72,9 +72,13 @@ export default async function handler(req, res) {
 
 
 
-  // Powrót na stronę z danymi użytkownika
-  res.redirect(
-    `/?user=${encodeURIComponent(JSON.stringify(user))}`
-  );
+// zapis użytkownika w cookie
+res.setHeader(
+  "Set-Cookie",
+  `discord_user=${encodeURIComponent(JSON.stringify(user))}; Path=/; Max-Age=604800; HttpOnly=false; SameSite=Lax`
+);
+
+// powrót na stronę
+res.redirect("/");
 
 }
