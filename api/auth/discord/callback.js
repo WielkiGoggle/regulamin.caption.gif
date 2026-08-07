@@ -8,6 +8,7 @@ export default async function handler(req, res) {
     return res.status(400).send("Brak kodu Discord");
   }
 
+
   // Pobieranie tokena Discord
   const response = await fetch(
     "https://discord.com/api/oauth2/token",
@@ -26,14 +27,17 @@ export default async function handler(req, res) {
     }
   );
 
+
   const data = await response.json();
+
 
   if (!data.access_token) {
     return res.status(500).json(data);
   }
 
 
-  // Pobieranie danych użytkownika Discord
+
+  // Pobieranie użytkownika Discord
   const userResponse = await fetch(
     "https://discord.com/api/users/@me",
     {
@@ -43,10 +47,12 @@ export default async function handler(req, res) {
     }
   );
 
+
   const user = await userResponse.json();
 
 
-  // zapis do bazy
+
+  // Zapis do Neon PostgreSQL
   await sql`
     INSERT INTO users (
       discord_id,
@@ -65,19 +71,10 @@ export default async function handler(req, res) {
   `;
 
 
-  // tworzenie sesji
-  res.setHeader(
-    "Set-Cookie",
-    `user=${encodeURIComponent(
-      JSON.stringify({
-        id: user.id,
-        username: user.username,
-        avatar: user.avatar
-      })
-    )}; Path=/; HttpOnly; Max-Age=86400; SameSite=Lax`
+
+  // Powrót na stronę z danymi użytkownika
+  res.redirect(
+    `/?user=${encodeURIComponent(JSON.stringify(user))}`
   );
 
-
-  // przekierowanie na stronę
-  res.redirect("/");
 }
