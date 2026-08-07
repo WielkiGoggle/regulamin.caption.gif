@@ -2448,171 +2448,31 @@ uaBtn.addEventListener(
      ========================= -->
 
 <script>
+async function checkDiscordUser() {
+  try {
+    const res = await fetch("/api/auth/user");
+    const user = await res.json();
 
-async function checkDiscordUser(){
+    if (user.loggedIn) {
+      document.getElementById("login-box").innerHTML = `
+        <div>
+          <img src="${user.avatar}" alt="Avatar">
+          <span>${user.username}</span>
+          <button id="logout-btn" type="button">Wyloguj</button>
+        </div>
+      `;
 
-  const loginBox =
-    document.getElementById(
-      "login-box"
-    );
-
-  try{
-
-    const response =
-      await fetch(
-        "/api/auth/user",
-        {
-          credentials:"include",
-          cache:"no-store"
-        }
-      );
-
-    if(!response.ok){
-
-      return;
-
+      document.getElementById("logout-btn").addEventListener("click", async () => {
+        await fetch("/api/auth/logout");
+        window.location.reload();
+      });
     }
-
-    const user =
-      await response.json();
-
-    if(
-      !user ||
-      !user.loggedIn
-    ){
-
-      return;
-
-    }
-
-    let avatar =
-      user.avatar;
-
-    if(
-      !avatar &&
-      user.id &&
-      user.avatarHash
-    ){
-
-      avatar =
-        `https://cdn.discordapp.com/avatars/${user.id}/${user.avatarHash}.png?size=64`;
-
-    }
-
-    if(
-      !avatar &&
-      user.id &&
-      user.avatar
-    ){
-
-      avatar =
-        `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`;
-
-    }
-
-    if(!avatar){
-
-      avatar =
-        "https://cdn.discordapp.com/embed/avatars/0.png";
-
-    }
-
-    const username =
-      user.username ||
-      user.global_name ||
-      user.displayName ||
-      "Discord";
-
-    loginBox.innerHTML = `
-
-      <div id="logged-user">
-
-        <img
-          id="discord-avatar"
-          src="${avatar}"
-          alt="Avatar"
-          onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'"
-        >
-
-        <span id="discord-username">
-          ${escapeHtml(username)}
-        </span>
-
-        <button
-          id="logout-btn"
-          type="button"
-        >
-          Wyloguj
-        </button>
-
-      </div>
-
-    `;
-
-    document
-      .getElementById("logout-btn")
-      .addEventListener(
-        "click",
-        logoutDiscord
-      );
-
-  }catch(error){
-
-    console.log(
-      "Nie zalogowano.",
-      error
-    );
-
+  } catch (e) {
+    console.log("Nie zalogowano");
   }
-
-}
-
-function escapeHtml(text){
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    text;
-
-  return div.innerHTML;
-
-}
-
-async function logoutDiscord(){
-
-  try{
-
-    await fetch(
-      "/api/auth/logout",
-      {
-        method:"POST",
-        credentials:"include"
-      }
-    );
-
-  }catch(error){
-
-    console.log(
-      "Logout API niedostępne."
-    );
-
-  }
-
-  document.cookie =
-    "discord_user=; Path=/; Max-Age=0; SameSite=Lax";
-
-  localStorage.removeItem(
-    "discord_user"
-  );
-
-  window.location.href =
-    "/";
-
 }
 
 checkDiscordUser();
-
 </script>
 
 </body>
