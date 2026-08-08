@@ -665,6 +665,9 @@ footer .d{color:var(--crimson);}
   padding:clamp(20px,6vh,80px) 16px;
   overflow-y:auto;
 }
+.ranking-overlay[hidden]{
+  display:none !important;
+}
 .ranking-modal{
   position:relative;
   width:100%;
@@ -1339,9 +1342,24 @@ async function loadRanking(){
   const status = document.getElementById("ranking-status");
   status.textContent = currentUserId ? "" : "Zaloguj się przez Discord, aby głosować.";
   try{
-    const res = await fetch("/api/members");
-    const data = await res.json();
+    const res = await fetch("/api/members", {
+      method: "GET",
+      credentials: "include",
+      cache: "no-store"
+    });
+    const data = await res.json().catch(() => ({}));
+
+    if(!res.ok || !Array.isArray(data.members)){
+      throw new Error(data.error || "Nieprawidłowa odpowiedź API /api/members");
+    }
+
     grid.innerHTML = "";
+
+    if(data.members.length === 0){
+      status.textContent = "Brak uczestników do wyświetlenia.";
+      return;
+    }
+
     data.members.forEach(m => {
       const isSelf = !!(currentUserId && m.id === currentUserId);
       const disabled = !currentUserId || isSelf;
@@ -1368,8 +1386,9 @@ async function loadRanking(){
     });
 
   }catch(e){
+    console.error("Błąd rankingu:", e);
     grid.innerHTML = "";
-    status.textContent = "Nie udało się załadować rankingu.";
+    status.textContent = e.message || "Nie udało się załadować rankingu.";
   }
 }
 
