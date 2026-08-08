@@ -652,6 +652,94 @@ footer .d{color:var(--crimson);}
   background:linear-gradient(to bottom,#0057B7 0%,#0057B7 50%,#FFD700 50%,#FFD700 100%);
 }
 
+/* ===== RANKING / GŁOSOWANIE ===== */
+.ranking-section{
+  position:relative;
+  z-index:3;
+  max-width:1280px;
+  margin:0 auto;
+  padding:clamp(40px,8vh,80px) clamp(20px,4vw,56px);
+  background:#080605;
+  box-shadow:0 0 0 100vmax #080605;
+  clip-path:inset(0 -100vmax);
+}
+.ranking-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(32px,4vw,56px);
+  text-transform:uppercase;
+  margin:0 0 8px;
+}
+.ranking-sub{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.15em;
+  color:var(--ink-mute);
+  text-transform:uppercase;
+  margin:0 0 36px;
+}
+.ranking-status{
+  font-size:14px;
+  color:var(--ink-dim);
+  margin-bottom:20px;
+  min-height:20px;
+}
+.ranking-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:16px;
+}
+.member-card{
+  background:rgba(236,230,220,.03);
+  border:1px solid var(--line-strong);
+  border-radius:10px;
+  padding:18px 14px;
+  text-align:center;
+  transition:.2s;
+}
+.member-card:hover{border-color:rgba(180,31,31,.4);}
+.member-avatar{
+  width:64px;height:64px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--line-strong);
+  margin:0 auto 12px;
+  display:block;
+}
+.member-name{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:.02em;
+  margin-bottom:6px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.member-score{
+  font-family:var(--font-mono);
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:14px;
+}
+.member-score.pos{color:#4ade80;}
+.member-score.neg{color:var(--crimson-soft);}
+.vote-buttons{display:flex;gap:8px;justify-content:center;}
+.btn-vote{
+  width:38px;height:38px;
+  border-radius:7px;
+  border:1px solid var(--line-strong);
+  background:transparent;
+  color:var(--ink);
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.15s;
+}
+.btn-vote.plus:hover:not(:disabled){background:#4ade8022;border-color:#4ade80;color:#4ade80;}
+.btn-vote.minus:hover:not(:disabled){background:rgba(180,31,31,.15);border-color:var(--crimson);color:var(--crimson-soft);}
+.btn-vote:disabled{opacity:.35;cursor:not-allowed;}
+
 /* ===== MOBILE ===== */
 @media(max-width:880px){
   header.hd{gap:10px;}
@@ -717,7 +805,7 @@ footer .d{color:var(--crimson);}
   <span class="nav-divider" aria-hidden="true"></span>
   <nav class="site-nav" aria-label="Główne menu">
     <a href="#top" id="nav-regulamin">Regulamin</a>
-    <a href="#wkrotce" id="nav-q">???</a>
+    <a href="#" id="nav-q">???</a>
     <a href="#wkrotce" id="nav-game">???</a>
   </nav>
   <div id="login-box">
@@ -825,6 +913,13 @@ footer .d{color:var(--crimson);}
     <span id="btn-final-join">Dołącz do caption.gif</span>
   </a>
   <p class="hint" id="final-hint">Klikając przycisk akceptujesz powyższy regulamin.</p>
+</section>
+
+<section class="ranking-section" id="ranking" hidden>
+  <h2 class="ranking-title" id="ranking-title">Ranking uczestników</h2>
+  <p class="ranking-sub" id="ranking-sub">Jeden głos dziennie — wybierz osobę i zagłosuj + lub −</p>
+  <p class="ranking-status" id="ranking-status"></p>
+  <div class="ranking-grid" id="ranking-grid">Ładowanie...</div>
 </section>
 
 <div class="toggle-wrapper">
@@ -1005,7 +1100,9 @@ const translations = {
     update_0_1_0_1: "Dodano górne menu: Regulamin, ??? i ???.",
     update_0_1_0_2: "Usunięto pierwszy przycisk Discorda i starą minigrę.",
     update_0_1_0_3: "Powiększono oraz zmieniono na czerwony przycisk „Czytaj regulamin”.",
-    update_0_1_0_4: "Dodano pasek aktualnej wersji strony."
+    update_0_1_0_4: "Dodano pasek aktualnej wersji strony.",
+    ranking_title: "Ranking uczestników",
+    ranking_sub: "Jeden głos dziennie — wybierz osobę i zagłosuj + lub −"
   },
   ua: {
     title: "Правила — caption.gif",
@@ -1058,7 +1155,9 @@ const translations = {
     update_0_1_0_1: "Додано верхнє меню: Правила, ??? і ???.",
     update_0_1_0_2: "Видалено першу кнопку Discord і стару мінігру.",
     update_0_1_0_3: "Збільшено та змінено на червоний кнопку «Читати правила».",
-    update_0_1_0_4: "Додано рядок поточної версії сторінки."
+    update_0_1_0_4: "Додано рядок поточної версії сторінки.",
+    ranking_title: "Рейтинг учасників",
+    ranking_sub: "Один голос на день — обери учасника і проголосуй + або −"
   }
 };
 
@@ -1114,6 +1213,11 @@ function setLanguage(lang){
   document.getElementById("update-3").textContent = t.update_0_1_0_3;
   document.getElementById("update-4").textContent = t.update_0_1_0_4;
 
+  const rankingTitleEl = document.getElementById("ranking-title");
+  const rankingSubEl = document.getElementById("ranking-sub");
+  if(rankingTitleEl) rankingTitleEl.textContent = t.ranking_title;
+  if(rankingSubEl) rankingSubEl.textContent = t.ranking_sub;
+
   if(lang === "pl"){
     plBtn.classList.add("active");
     uaBtn.classList.remove("active");
@@ -1146,6 +1250,7 @@ async function checkDiscordUser(){
     if(!response.ok) throw new Error("Błąd odpowiedzi API");
     const user = await response.json();
     if(user && user.loggedIn){
+      currentUserId = user.id || null;
       const avatar = user.avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
       const username = user.username || "Użytkownik";
       loginBox.innerHTML = `
@@ -1185,6 +1290,80 @@ async function checkDiscordUser(){
 function logoutDiscord() {
   window.location.href = "/api/auth/logout";
 }
+
+/* ===== RANKING / GŁOSOWANIE ===== */
+let currentUserId = null;
+
+async function loadRanking(){
+  const grid = document.getElementById("ranking-grid");
+  const status = document.getElementById("ranking-status");
+  try{
+    const res = await fetch("/api/members");
+    const data = await res.json();
+    grid.innerHTML = "";
+    data.members.forEach(m => {
+      const card = document.createElement("div");
+      card.className = "member-card";
+      const scoreClass = m.score > 0 ? "pos" : m.score < 0 ? "neg" : "";
+      card.innerHTML = `
+        <img class="member-avatar" src="${escapeHtml(m.avatar_url)}" alt="${escapeHtml(m.display_name)}">
+        <div class="member-name" title="${escapeHtml(m.display_name)}">${escapeHtml(m.display_name)}</div>
+        <div class="member-score ${scoreClass}">${m.score > 0 ? "+" : ""}${m.score}</div>
+        <div class="vote-buttons">
+          <button class="btn-vote minus" data-id="${m.id}" data-val="-1">−</button>
+          <button class="btn-vote plus" data-id="${m.id}" data-val="1">+</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    grid.querySelectorAll(".btn-vote").forEach(btn => {
+      btn.addEventListener("click", () => castVote(btn.dataset.id, parseInt(btn.dataset.val)));
+    });
+
+  }catch(e){
+    grid.innerHTML = "";
+    status.textContent = "Nie udało się załadować rankingu.";
+  }
+}
+
+async function castVote(memberId, value){
+  const status = document.getElementById("ranking-status");
+  status.textContent = "Wysyłanie głosu...";
+  try{
+    const res = await fetch("/api/vote", {
+      method: "POST",
+      credentials: "include",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({member_id: memberId, value})
+    });
+    const data = await res.json();
+    if(!res.ok){
+      status.textContent = data.error || "Wystąpił błąd.";
+      return;
+    }
+    status.textContent = "Głos zapisany. Wróć jutro!";
+    loadRanking();
+  }catch(e){
+    status.textContent = "Wystąpił błąd sieci.";
+  }
+}
+
+const navQ = document.getElementById("nav-q");
+const rankingSection = document.getElementById("ranking");
+let rankingLoadedOnce = false;
+navQ.addEventListener("click", (e) => {
+  e.preventDefault();
+  const isHidden = rankingSection.hidden;
+  rankingSection.hidden = !isHidden;
+  if(!rankingSection.hidden){
+    if(!rankingLoadedOnce){
+      loadRanking();
+      rankingLoadedOnce = true;
+    }
+    rankingSection.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+});
 
 setLanguage("pl");
 checkDiscordUser();
