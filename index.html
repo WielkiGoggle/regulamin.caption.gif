@@ -1330,18 +1330,8 @@ async function checkDiscordUser(){
   }
 }
 
-async function logoutDiscord() {
+function logoutDiscord() {
   window.location.href = "/api/auth/logout";
-}
-  try{
-    await fetch("/api/auth/logout", {
-      method: "GET",
-      credentials: "include"
-    });
-  }catch(error){
-    console.log("Błąd podczas wylogowania.");
-  }
-  window.location.reload();
 }
 
 setLanguage("pl");
