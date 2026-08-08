@@ -95,13 +95,19 @@ export default async function handler(req, res) {
       );
     }
 
-    const cookieValue = encodeURIComponent(
-      JSON.stringify(user)
-    );
+    // Zapisujemy tylko potrzebne dane
+    const sessionUser = {
+      id: user.id,
+      username: user.username,
+      global_name: user.global_name || user.username,
+      avatar: user.avatar || null
+    };
+
+    const cookieValue = encodeURIComponent(JSON.stringify(sessionUser));
 
     res.setHeader(
       "Set-Cookie",
-      `discord_user=${cookieValue}; Path=/; Max-Age=604800; HttpOnly; Secure; SameSite=Lax`
+      `discord_user=${cookieValue}; Path=/; Max-Age=2592000; HttpOnly; Secure; SameSite=Lax`
     );
 
     return res.redirect("/");
