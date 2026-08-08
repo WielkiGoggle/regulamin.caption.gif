@@ -36,31 +36,25 @@ export default async function handler(req, res) {
     );
 
     const tokenText = await tokenResponse.text();
-
     let tokenData;
 
     try {
       tokenData = JSON.parse(tokenText);
     } catch {
       return res.status(500).send(
-        "BŁĄD: Discord zwrócił nieprawidłową odpowiedź: " +
-        tokenText
+        "BŁĄD: Discord zwrócił nieprawidłową odpowiedź: " + tokenText
       );
     }
 
     if (!tokenResponse.ok) {
       console.error("Discord token error:", tokenData);
-
       return res.status(400).send(
-        "DISCORD TOKEN ERROR: " +
-        JSON.stringify(tokenData)
+        "DISCORD TOKEN ERROR: " + JSON.stringify(tokenData)
       );
     }
 
     if (!tokenData.access_token) {
-      return res.status(500).send(
-        "BŁĄD: Discord nie zwrócił access_token."
-      );
+      return res.status(500).send("BŁĄD: Discord nie zwrócił access_token.");
     }
 
     const userResponse = await fetch(
@@ -74,24 +68,20 @@ export default async function handler(req, res) {
     );
 
     const userText = await userResponse.text();
-
     let user;
 
     try {
       user = JSON.parse(userText);
     } catch {
       return res.status(500).send(
-        "BŁĄD: Discord zwrócił nieprawidłowe dane użytkownika: " +
-        userText
+        "BŁĄD: Discord zwrócił nieprawidłowe dane użytkownika: " + userText
       );
     }
 
     if (!userResponse.ok) {
       console.error("Discord user error:", user);
-
       return res.status(400).send(
-        "DISCORD USER ERROR: " +
-        JSON.stringify(user)
+        "DISCORD USER ERROR: " + JSON.stringify(user)
       );
     }
 
@@ -113,10 +103,8 @@ export default async function handler(req, res) {
     return res.redirect("/");
   } catch (error) {
     console.error("CALLBACK ERROR:", error);
-
     return res.status(500).send(
-      "CALLBACK ERROR: " +
-      (error?.message || String(error))
+      "CALLBACK ERROR: " + (error?.message || String(error))
     );
   }
 }
