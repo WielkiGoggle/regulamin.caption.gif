@@ -652,23 +652,53 @@ footer .d{color:var(--crimson);}
   background:linear-gradient(to bottom,#0057B7 0%,#0057B7 50%,#FFD700 50%,#FFD700 100%);
 }
 
-/* ===== RANKING / GŁOSOWANIE ===== */
-.ranking-section{
+/* ===== RANKING / GŁOSOWANIE — OSOBNE OKNO (MODAL) ===== */
+.ranking-overlay{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:rgba(4,3,2,.82);
+  backdrop-filter:blur(6px);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:clamp(20px,6vh,80px) 16px;
+  overflow-y:auto;
+}
+.ranking-modal{
   position:relative;
-  z-index:3;
-  max-width:1280px;
-  margin:0 auto;
-  padding:clamp(40px,8vh,80px) clamp(20px,4vw,56px);
-  background:#080605;
-  box-shadow:0 0 0 100vmax #080605;
-  clip-path:inset(0 -100vmax);
+  width:100%;
+  max-width:920px;
+  background:#0c0907;
+  border:1px solid var(--line-strong);
+  border-radius:14px;
+  padding:clamp(24px,4vw,40px);
+  box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 0 1px rgba(180,31,31,.08);
+}
+.ranking-modal-close{
+  position:absolute;
+  top:16px;right:16px;
+  width:34px;height:34px;
+  border-radius:8px;
+  border:1px solid var(--line-strong);
+  background:transparent;
+  color:var(--ink-dim);
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+  transition:.15s;
+}
+.ranking-modal-close:hover{
+  border-color:var(--crimson);
+  color:#fff;
+  background:rgba(180,31,31,.18);
 }
 .ranking-title{
   font-family:var(--font-display);
   font-weight:700;
-  font-size:clamp(32px,4vw,56px);
+  font-size:clamp(28px,3.4vw,44px);
   text-transform:uppercase;
-  margin:0 0 8px;
+  margin:0 8px 8px 0;
 }
 .ranking-sub{
   font-family:var(--font-mono);
@@ -676,7 +706,7 @@ footer .d{color:var(--crimson);}
   letter-spacing:.15em;
   color:var(--ink-mute);
   text-transform:uppercase;
-  margin:0 0 36px;
+  margin:0 0 28px;
 }
 .ranking-status{
   font-size:14px;
@@ -686,7 +716,7 @@ footer .d{color:var(--crimson);}
 }
 .ranking-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
   gap:16px;
 }
 .member-card{
@@ -739,6 +769,13 @@ footer .d{color:var(--crimson);}
 .btn-vote.plus:hover:not(:disabled){background:#4ade8022;border-color:#4ade80;color:#4ade80;}
 .btn-vote.minus:hover:not(:disabled){background:rgba(180,31,31,.15);border-color:var(--crimson);color:var(--crimson-soft);}
 .btn-vote:disabled{opacity:.35;cursor:not-allowed;}
+.member-self-tag{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+}
 
 /* ===== MOBILE ===== */
 @media(max-width:880px){
@@ -915,12 +952,15 @@ footer .d{color:var(--crimson);}
   <p class="hint" id="final-hint">Klikając przycisk akceptujesz powyższy regulamin.</p>
 </section>
 
-<section class="ranking-section" id="ranking" hidden>
-  <h2 class="ranking-title" id="ranking-title">Ranking uczestników</h2>
-  <p class="ranking-sub" id="ranking-sub">Jeden głos dziennie — wybierz osobę i zagłosuj + lub −</p>
-  <p class="ranking-status" id="ranking-status"></p>
-  <div class="ranking-grid" id="ranking-grid">Ładowanie...</div>
-</section>
+<div class="ranking-overlay" id="ranking-overlay" hidden>
+  <div class="ranking-modal">
+    <button class="ranking-modal-close" id="ranking-modal-close" type="button" aria-label="Zamknij">&times;</button>
+    <h2 class="ranking-title" id="ranking-title">Ranking uczestników</h2>
+    <p class="ranking-sub" id="ranking-sub">Jeden głos dziennie — wybierz osobę i zagłosuj + lub −</p>
+    <p class="ranking-status" id="ranking-status"></p>
+    <div class="ranking-grid" id="ranking-grid">Ładowanie...</div>
+  </div>
+</div>
 
 <div class="toggle-wrapper">
   <button class="btn-toggle-geo" id="toggle-geo-btn" type="button">Wyłącz geometrię</button>
@@ -1297,11 +1337,14 @@ let currentUserId = null;
 async function loadRanking(){
   const grid = document.getElementById("ranking-grid");
   const status = document.getElementById("ranking-status");
+  status.textContent = currentUserId ? "" : "Zaloguj się przez Discord, aby głosować.";
   try{
     const res = await fetch("/api/members");
     const data = await res.json();
     grid.innerHTML = "";
     data.members.forEach(m => {
+      const isSelf = !!(currentUserId && m.id === currentUserId);
+      const disabled = !currentUserId || isSelf;
       const card = document.createElement("div");
       card.className = "member-card";
       const scoreClass = m.score > 0 ? "pos" : m.score < 0 ? "neg" : "";
@@ -1309,15 +1352,18 @@ async function loadRanking(){
         <img class="member-avatar" src="${escapeHtml(m.avatar_url)}" alt="${escapeHtml(m.display_name)}">
         <div class="member-name" title="${escapeHtml(m.display_name)}">${escapeHtml(m.display_name)}</div>
         <div class="member-score ${scoreClass}">${m.score > 0 ? "+" : ""}${m.score}</div>
-        <div class="vote-buttons">
-          <button class="btn-vote minus" data-id="${m.id}" data-val="-1">−</button>
-          <button class="btn-vote plus" data-id="${m.id}" data-val="1">+</button>
-        </div>
+        ${isSelf
+          ? `<div class="member-self-tag">To Ty</div>`
+          : `<div class="vote-buttons">
+              <button class="btn-vote minus" data-id="${m.id}" data-val="-1" ${disabled ? "disabled" : ""}>−</button>
+              <button class="btn-vote plus" data-id="${m.id}" data-val="1" ${disabled ? "disabled" : ""}>+</button>
+            </div>`
+        }
       `;
       grid.appendChild(card);
     });
 
-    grid.querySelectorAll(".btn-vote").forEach(btn => {
+    grid.querySelectorAll(".btn-vote:not(:disabled)").forEach(btn => {
       btn.addEventListener("click", () => castVote(btn.dataset.id, parseInt(btn.dataset.val)));
     });
 
@@ -1350,19 +1396,29 @@ async function castVote(memberId, value){
 }
 
 const navQ = document.getElementById("nav-q");
-const rankingSection = document.getElementById("ranking");
-let rankingLoadedOnce = false;
+const rankingOverlay = document.getElementById("ranking-overlay");
+const rankingModalClose = document.getElementById("ranking-modal-close");
+
+function openRankingModal(){
+  rankingOverlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  loadRanking();
+}
+function closeRankingModal(){
+  rankingOverlay.hidden = true;
+  document.body.style.overflow = "";
+}
+
 navQ.addEventListener("click", (e) => {
   e.preventDefault();
-  const isHidden = rankingSection.hidden;
-  rankingSection.hidden = !isHidden;
-  if(!rankingSection.hidden){
-    if(!rankingLoadedOnce){
-      loadRanking();
-      rankingLoadedOnce = true;
-    }
-    rankingSection.scrollIntoView({behavior:"smooth", block:"start"});
-  }
+  openRankingModal();
+});
+rankingModalClose.addEventListener("click", closeRankingModal);
+rankingOverlay.addEventListener("click", (e) => {
+  if(e.target === rankingOverlay) closeRankingModal();
+});
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" && !rankingOverlay.hidden) closeRankingModal();
 });
 
 setLanguage("pl");
