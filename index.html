@@ -850,31 +850,16 @@ footer .d{color:var(--crimson);}
   </nav>
   <div id="login-box">
     <a id="discord-login" href="/api/auth/discord/login">ZALOGUJ SIĘ</a>
-    <div class="updates-panel" id="updates-panel" hidden>
-  <h2 id="updates-title">Historia aktualizacji</h2>
-
-  <article class="version-entry">
-    <h3>v0.2.0 — 08.08.2026</h3>
-    <ul>
-      <li>Dodano możliwość głosowania + / - na uczestników.</li>
-      <li>Dodano logowanie na serwer za pomocą Discord.</li>
-    </ul>
-  </article>
-
-  <article class="version-entry">
-    <h3>v0.1.0 — 05.08.2026</h3>
-    <ul>
-      <li>Dodano górne menu: Regulamin, ??? i ???</li>
-      <li>Usunięto pierwszy przycisk Discorda i starą minigrę.</li>
-      <li>Powiększono oraz zmieniono na czerwony przycisk „Czytaj regulamin”.</li>
-      <li>Dodano pasek aktualnej wersji strony.</li>
-      <li>Dodano historię aktualizacji.</li>
-    </ul>
-  </article>
-</div>
   </div>
   <div class="updates-panel" id="updates-panel" hidden>
     <h2 id="updates-title">Historia aktualizacji</h2>
+    <article class="version-entry">
+      <h3>v0.2.0 — 08.08.2026</h3>
+      <ul>
+        <li id="update-201">Dodano możliwość głosowania + / - na uczestników.</li>
+        <li id="update-202">Dodano logowanie na serwer za pomocą Discord.</li>
+      </ul>
+    </article>
     <article class="version-entry">
       <h3>v0.1.0 — 05.08.2026</h3>
       <ul>
@@ -1166,6 +1151,8 @@ const translations = {
     update_0_1_0_2: "Usunięto pierwszy przycisk Discorda i starą minigrę.",
     update_0_1_0_3: "Powiększono oraz zmieniono na czerwony przycisk „Czytaj regulamin”.",
     update_0_1_0_4: "Dodano pasek aktualnej wersji strony.",
+    update_0_2_0_1: "Dodano możliwość głosowania + / - na uczestników.",
+    update_0_2_0_2: "Dodano logowanie na serwer za pomocą Discord.",
     ranking_title: "Ranking uczestników",
     ranking_sub: "Jeden głos dziennie — wybierz osobę i zagłosuj + lub −"
   },
@@ -1214,13 +1201,15 @@ const translations = {
     btn_geo_on: "Увімкнути геометрію",
     login_btn: "УВІЙТИ",
     nav_regulamin: "Правила",
-    nav_q: "Ranking",
+    nav_q: "Рейтинг",
     nav_game: "???",
     updates_title: "Історія оновлень",
     update_0_1_0_1: "Додано верхнє меню: Правила, ???.",
     update_0_1_0_2: "Видалено першу кнопку Discord і стару мінігру.",
     update_0_1_0_3: "Збільшено та змінено на червоний кнопку «Читати правила».",
     update_0_1_0_4: "Додано рядок поточної версії сторінки.",
+    update_0_2_0_1: "Додано можливість голосування + / - за учасників.",
+    update_0_2_0_2: "Додано вхід на сервер через Discord.",
     ranking_title: "Рейтинг учасників",
     ranking_sub: "Один голос на день — обери учасника і проголосуй + або −"
   }
@@ -1277,6 +1266,8 @@ function setLanguage(lang){
   document.getElementById("update-2").textContent = t.update_0_1_0_2;
   document.getElementById("update-3").textContent = t.update_0_1_0_3;
   document.getElementById("update-4").textContent = t.update_0_1_0_4;
+  document.getElementById("update-201").textContent = t.update_0_2_0_1;
+  document.getElementById("update-202").textContent = t.update_0_2_0_2;
 
   const rankingTitleEl = document.getElementById("ranking-title");
   const rankingSubEl = document.getElementById("ranking-sub");
