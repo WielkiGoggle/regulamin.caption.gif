@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       const id = user.id;
       const username = user.username;
       const displayName = member.nick || user.global_name || user.username;
-      const avatar = user.avatar || null;
+      const avatar = member.avatar || user.avatar || null;
 
       await sql`
         INSERT INTO members (id, username, display_name, avatar, updated_at)
