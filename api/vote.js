@@ -11,6 +11,8 @@ function getUserFromCookie(req) {
   }
 }
 
+const COOLDOWN_HOURS = 24;
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -21,51 +23,54 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Musisz być zalogowany, aby głosować.' });
   }
 
-  const { member_id, value } = req.body || {};
-
-  if (!member_id || (value !== 1 && value !== -1)) {
-    return res.status(400).json({ error: 'Nieprawidłowe dane głosu.' });
+  const { plus_id, minus_id } = req.body || {};
+  if (!plus_id || !minus_id) {
+    return res.status(400).json({ error: 'Wybierz osobę na + i osobę na −.' });
   }
-
-  if (member_id === user.id) {
+  if (plus_id === minus_id) {
+    return res.status(400).json({ error: 'Nie możesz wybrać tej samej osoby na + i na −.' });
+  }
+  if (plus_id === user.id || minus_id === user.id) {
     return res.status(400).json({ error: 'Nie możesz głosować na samego siebie.' });
   }
 
   try {
-    const existing = await sql`
-      SELECT id FROM votes
+    // obaj kandydaci muszą istnieć i nie być usunięci z serwera
+    const candidates = await sql`
+      SELECT id, removed FROM members WHERE id IN (${plus_id}, ${minus_id})
+    `;
+    if (candidates.rows.length !== 2 || candidates.rows.some(c => c.removed)) {
+      return res.status(400).json({ error: 'Jeden z wybranych uczestników jest niedostępny.' });
+    }
+
+    // rolling 24h od ostatniego głosu (nie reset o północy)
+    const last = await sql`
+      SELECT created_at FROM votes
       WHERE voter_id = ${user.id}
-        AND created_at::date = CURRENT_DATE
+      ORDER BY created_at DESC
+      LIMIT 1
     `;
-
-    if (existing.rows.length > 0) {
-      return res.status(429).json({ error: 'Już dziś zagłosowałeś. Wróć jutro.' });
+    if (last.rows.length > 0) {
+      const lastVoteAt = new Date(last.rows[0].created_at);
+      const nextVoteAt = new Date(lastVoteAt.getTime() + COOLDOWN_HOURS * 3600 * 1000);
+      if (nextVoteAt > new Date()) {
+        return res.status(429).json({
+          error: 'Możesz głosować raz na 24 godziny.',
+          next_vote_at: nextVoteAt.toISOString()
+        });
+      }
     }
 
     await sql`
-      INSERT INTO votes (voter_id, member_id, value)
-      VALUES (${user.id}, ${member_id}, ${value})
+      INSERT INTO votes (voter_id, plus_member_id, minus_member_id, created_at)
+      VALUES (${user.id}, ${plus_id}, ${minus_id}, NOW())
     `;
+    await sql`UPDATE members SET score = score + 1 WHERE id = ${plus_id}`;
+    await sql`UPDATE members SET score = score - 1 WHERE id = ${minus_id}`;
 
-    await sql`
-      UPDATE members
-      SET score = score + ${value}
-      WHERE id = ${member_id}
-    `;
-
-    const updated = await sql`
-      SELECT score FROM members WHERE id = ${member_id}
-    `;
-
-    return res.status(200).json({
-      success: true,
-      new_score: updated.rows[0]?.score ?? null
-    });
-
+    const nextVoteAt = new Date(Date.now() + COOLDOWN_HOURS * 3600 * 1000);
+    return res.status(200).json({ success: true, next_vote_at: nextVoteAt.toISOString() });
   } catch (error) {
-    if (error.message && error.message.includes('votes_one_per_day')) {
-      return res.status(429).json({ error: 'Już dziś zagłosowałeś. Wróć jutro.' });
-    }
     console.error('Vote error:', error);
     return res.status(500).json({ error: error.message });
   }
