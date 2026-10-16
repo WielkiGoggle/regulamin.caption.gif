@@ -1551,26 +1551,26 @@ function fmtCountdown(ms){
 
 function startVoteCountdown(nextVoteAtIso){
   const timerEl = document.getElementById("ranking-vote-timer");
-  const confirmBtn = document.getElementById("btn-confirm-vote");
-  const picksEl = document.getElementById("ranking-picks");
-  if(voteCountdownInterval) clearInterval(voteCountdownInterval);
+  if(voteCountdownInterval){
+    clearInterval(voteCountdownInterval);
+    voteCountdownInterval = null;
+  }
   const target = new Date(nextVoteAtIso).getTime();
 
   function tick(){
     const remaining = target - Date.now();
     if(remaining <= 0){
-      clearInterval(voteCountdownInterval);
+      if(voteCountdownInterval) clearInterval(voteCountdownInterval);
+      voteCountdownInterval = null;
       timerEl.hidden = true;
-      picksEl.textContent = "Możesz teraz zagłosować — wybierz + i −.";
-      confirmBtn.disabled = true;
-      confirmBtn.hidden = false;
-      return;
+      loadRanking();
+      return false;
     }
     timerEl.hidden = false;
     timerEl.innerHTML = `Kolejny głos za: <b>${fmtCountdown(remaining)}</b>`;
+    return true;
   }
-  tick();
-  voteCountdownInterval = setInterval(tick, 1000);
+  if(tick()) voteCountdownInterval = setInterval(tick, 1000);
 }
 
 function updatePicksBar(){
@@ -1646,6 +1646,7 @@ async function loadRanking(){
     // Jeśli backend zwraca info o blokadzie 24h (np. {can_vote:false, next_vote_at:"..."}),
     // pokazujemy timer i chowamy przyciski głosowania zamiast selekcji par.
     if(currentUserId && data.can_vote === false && data.next_vote_at){
+      bar.hidden = false;
       grid.querySelectorAll(".vote-buttons").forEach(el => el.style.display = "none");
       startVoteCountdown(data.next_vote_at);
     } else if(currentUserId){
