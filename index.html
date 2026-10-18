@@ -80,7 +80,7 @@ button{
   animation:ghost-float 6s ease-in-out infinite;
 }
 .halloween-ghost g{fill:#f2f0ec;}
-.halloween-ghost .eyes{fill:#161313;}
+.halloween-ghost .eyes{fill:#080604;}
 .halloween-ghost.ghost-a{top:115px;left:7%;animation-delay:-1s;transform:rotate(-8deg);}
 .halloween-ghost.ghost-b{top:320px;right:8%;width:clamp(28px,4vw,52px);animation-delay:-3.2s;}
 .halloween-ghost.ghost-c{top:760px;left:13%;width:clamp(26px,3.5vw,44px);opacity:.3;animation-delay:-4.5s;}
@@ -968,6 +968,11 @@ footer .d{color:var(--crimson);}
   .sec ol li{grid-template-columns:40px 1fr;gap:12px;}
 }
 @media(max-width:520px){
+  .halloween-ghost .eyes{
+    transform:scale(1.5);
+    transform-box:fill-box;
+    transform-origin:center;
+  }
   header.hd{
     flex-wrap:wrap;
     gap:8px;
