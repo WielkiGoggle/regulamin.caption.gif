@@ -773,6 +773,7 @@ footer .d{color:var(--crimson);}
   gap:16px;
 }
 .member-card{
+  position:relative;
   background:rgba(236,230,220,.03);
   border:1px solid var(--line-strong);
   border-radius:10px;
@@ -781,6 +782,36 @@ footer .d{color:var(--crimson);}
   transition:.2s;
 }
 .member-card:hover{border-color:rgba(180,31,31,.4);}
+.member-card.bulj0n-card::after{
+  content:"";
+  position:absolute;
+  right:5px;
+  bottom:18px;
+  width:58px;
+  height:7px;
+  background:#050403;
+  transform:rotate(-45deg);
+  transform-origin:right center;
+  pointer-events:none;
+}
+.bulj0n-gravestone{
+  position:absolute;
+  left:5px;
+  bottom:4px;
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:42px;
+  border:2px solid #050403;
+  border-radius:18px 18px 2px 2px;
+  background:#d8d5ce;
+  color:#171412;
+  font-family:var(--font-mono);
+  font-size:9px;
+  font-weight:700;
+  box-shadow:0 1px 5px rgba(0,0,0,.65);
+  pointer-events:none;
+}
 .member-avatar{
   width:64px;height:64px;
   border-radius:50%;
@@ -1602,12 +1633,14 @@ async function loadRanking(){
     data.members.forEach(m => {
       const isSelf = !!(currentUserId && m.id === currentUserId);
       const disabled = !currentUserId || isSelf;
+      const isBulj0n = m.display_name.trim().toLowerCase() === "bulj0n";
       const card = document.createElement("div");
-      card.className = "member-card";
+      card.className = `member-card${isBulj0n ? " bulj0n-card" : ""}`;
       card.dataset.id = m.id;
       const scoreClass = m.score > 0 ? "pos" : m.score < 0 ? "neg" : "";
       card.innerHTML = `
         <img class="member-avatar" src="${escapeHtml(m.avatar_url)}" alt="${escapeHtml(m.display_name)}">
+        ${isBulj0n ? '<span class="bulj0n-gravestone" aria-hidden="true">RIP</span>' : ""}
         <div class="member-name" title="${escapeHtml(m.display_name)}">${escapeHtml(m.display_name)}</div>
         <div class="member-score ${scoreClass}">${m.score > 0 ? "+" : ""}${m.score}</div>
         ${isSelf
