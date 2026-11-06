@@ -929,6 +929,77 @@ footer .d{color:var(--crimson);}
   color:var(--ink-mute);
   grid-column:1/-1;
 }
+.cookie-reward{
+  position:absolute;
+  right:24px;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:80;
+}
+.cookie-trigger{
+  display:grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  border:1px solid var(--line-strong);
+  border-radius:50%;
+  background:#17100d;
+  color:var(--ink);
+  font-size:30px;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.45);
+  transition:transform .18s ease,border-color .18s ease;
+}
+.cookie-trigger:hover,
+.cookie-trigger:focus-visible{
+  transform:translateY(-3px) rotate(-8deg);
+  border-color:var(--crimson-soft);
+}
+.cookie-message{
+  position:absolute;
+  right:0;
+  top:calc(100% + 12px);
+  width:min(320px,calc(100vw - 32px));
+  padding:18px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:rgba(12,9,7,.98);
+  box-shadow:0 14px 36px rgba(0,0,0,.55);
+}
+.cookie-message[hidden]{display:none;}
+.cookie-message p{
+  margin:0 28px 12px 0;
+  color:var(--ink);
+  font-size:14px;
+  line-height:1.6;
+}
+.cookie-code{
+  display:inline-block;
+  padding:7px 11px;
+  border:1px solid rgba(217,69,69,.45);
+  border-radius:6px;
+  background:rgba(180,31,31,.14);
+  color:#fff;
+  font-family:var(--font-mono);
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.16em;
+}
+.cookie-dismiss{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:28px;
+  height:28px;
+  border:0;
+  border-radius:6px;
+  background:transparent;
+  color:var(--ink-dim);
+  font-size:20px;
+  cursor:pointer;
+}
+.cookie-dismiss:hover,
+.cookie-dismiss:focus-visible{color:var(--ink);background:rgba(255,255,255,.08);}
 
 /* ===== MOBILE ===== */
 @media(max-width:880px){
@@ -977,6 +1048,7 @@ footer .d{color:var(--crimson);}
   }
   .lang-btns{gap:16px;}
   .btn-flag{width:28px;height:28px;}
+  .cookie-reward{right:16px;}
 }
 </style>
 </head>
@@ -1109,6 +1181,14 @@ footer .d{color:var(--crimson);}
     <span id="btn-final-join">Dołącz do caption.gif</span>
   </a>
   <p class="hint" id="final-hint">Klikając przycisk akceptujesz powyższy regulamin.</p>
+  <div class="cookie-reward">
+    <button class="cookie-trigger" id="cookie-trigger" type="button" aria-label="Otwórz wiadomość z ciasteczka" aria-expanded="false" aria-controls="cookie-message">🍪</button>
+    <div class="cookie-message" id="cookie-message" role="dialog" aria-label="Wiadomość z ciasteczka" hidden>
+      <button class="cookie-dismiss" id="cookie-dismiss" type="button" aria-label="Zamknij wiadomość">×</button>
+      <p>Oznacz @bedil i napisz kod na ogólnym, a dostaniesz ciasteczko.</p>
+      <span class="cookie-code">Kod: BURGER</span>
+    </div>
+  </div>
 </section>
 
 <div class="ranking-overlay" id="ranking-overlay" hidden>
@@ -1153,6 +1233,20 @@ footer .d{color:var(--crimson);}
 </main>
 
 <script>
+const cookieTrigger = document.getElementById("cookie-trigger");
+const cookieMessage = document.getElementById("cookie-message");
+const cookieDismiss = document.getElementById("cookie-dismiss");
+
+function setCookieMessageOpen(isOpen){
+  cookieMessage.hidden = !isOpen;
+  cookieTrigger.setAttribute("aria-expanded", String(isOpen));
+}
+
+cookieTrigger.addEventListener("click", () => {
+  setCookieMessageOpen(cookieMessage.hidden);
+});
+cookieDismiss.addEventListener("click", () => setCookieMessageOpen(false));
+
 const hd = document.getElementById("hd");
 window.addEventListener("scroll", () => {
   hd.classList.toggle("scrolled", window.scrollY > 30);
