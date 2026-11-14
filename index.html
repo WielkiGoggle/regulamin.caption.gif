@@ -374,7 +374,7 @@ header.hd.scrolled{
 .cta.xl svg{width:24px;height:24px;}
 .hero{
   position:relative;
-  z-index:3;
+  z-index:4;
   padding:clamp(40px,8vh,80px) clamp(20px,4vw,56px) clamp(60px,10vh,120px);
   max-width:1280px;
   margin:0 auto;
@@ -429,7 +429,6 @@ nav.toc{
   border-bottom:1px solid var(--line);
   background:#080605;
   box-shadow:0 0 0 100vmax #080605;
-  clip-path:inset(0 -100vmax);
 }
 .toc-lbl{
   font-family:var(--font-mono);
@@ -931,7 +930,7 @@ footer .d{color:var(--crimson);}
 }
 .cookie-reward{
   position:absolute;
-  right:24px;
+  right:-205px;
   top:50%;
   transform:translateY(-50%);
   z-index:80;
@@ -957,9 +956,9 @@ footer .d{color:var(--crimson);}
 }
 .cookie-message{
   position:absolute;
-  right:0;
-  top:calc(100% + 12px);
-  width:min(320px,calc(100vw - 32px));
+  right:calc(100% + 12px);
+  bottom:0;
+  width:min(320px,calc(100vw - 100px));
   padding:18px;
   border:1px solid var(--line-strong);
   border-radius:12px;
@@ -1115,6 +1114,14 @@ footer .d{color:var(--crimson);}
     <li><a href="#system-kar"><span class="n">2.</span><span class="t" id="toc-sec2">System Kar.</span></a></li>
     <li><a href="#postanowienia-koncowe"><span class="n">3.</span><span class="t" id="toc-sec3">Postanowienia Końcowe.</span></a></li>
   </ol>
+  <div class="cookie-reward">
+    <button class="cookie-trigger" id="cookie-trigger" type="button" aria-label="Otwórz wiadomość z ciasteczka" aria-expanded="false" aria-controls="cookie-message">🍪</button>
+    <div class="cookie-message" id="cookie-message" role="dialog" aria-label="Wiadomość z ciasteczka" hidden>
+      <button class="cookie-dismiss" id="cookie-dismiss" type="button" aria-label="Zamknij wiadomość">×</button>
+      <p>Oznacz @bedil i napisz kod na ogólnym, a dostaniesz ciasteczko.</p>
+      <span class="cookie-code">Kod: BURGER</span>
+    </div>
+  </div>
 </nav>
 
 <section class="content" id="tresc">
@@ -1181,14 +1188,6 @@ footer .d{color:var(--crimson);}
     <span id="btn-final-join">Dołącz do caption.gif</span>
   </a>
   <p class="hint" id="final-hint">Klikając przycisk akceptujesz powyższy regulamin.</p>
-  <div class="cookie-reward">
-    <button class="cookie-trigger" id="cookie-trigger" type="button" aria-label="Otwórz wiadomość z ciasteczka" aria-expanded="false" aria-controls="cookie-message">🍪</button>
-    <div class="cookie-message" id="cookie-message" role="dialog" aria-label="Wiadomość z ciasteczka" hidden>
-      <button class="cookie-dismiss" id="cookie-dismiss" type="button" aria-label="Zamknij wiadomość">×</button>
-      <p>Oznacz @bedil i napisz kod na ogólnym, a dostaniesz ciasteczko.</p>
-      <span class="cookie-code">Kod: BURGER</span>
-    </div>
-  </div>
 </section>
 
 <div class="ranking-overlay" id="ranking-overlay" hidden>
