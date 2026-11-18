@@ -171,6 +171,25 @@ header.hd.scrolled{
   transform:translateY(-1px);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 7px 16px rgba(217,69,69,.26);
 }
+@keyframes gto6-glow{
+  0%,100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 0 10px rgba(217,69,69,.48),0 0 22px rgba(180,31,31,.28);}
+  50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 18px rgba(255,83,83,.78),0 0 36px rgba(180,31,31,.42);}
+}
+#nav-game{
+  border-color:#e65353;
+  background:linear-gradient(135deg,#d93434,#a8171d);
+  font-size:16px;
+  text-shadow:0 0 8px rgba(255,255,255,.35);
+  animation:gto6-glow 2.2s ease-in-out infinite;
+}
+#nav-game:hover,#nav-game:focus-visible{
+  background:linear-gradient(135deg,#ef4545,#c42027);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 20px rgba(255,83,83,.82),0 0 40px rgba(180,31,31,.48);
+  animation:none;
+}
+@media(prefers-reduced-motion:reduce){
+  #nav-game{animation:none;}
+}
 .version-badge{
   padding:4px 9px;
   border:1px solid var(--line-strong);
@@ -1049,6 +1068,173 @@ footer .d{color:var(--crimson);}
   .btn-flag{width:28px;height:28px;}
   .cookie-reward{right:16px;}
 }
+
+.puzzle-overlay{
+  position:fixed;
+  inset:0;
+  z-index:220;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  overflow-y:auto;
+  padding:clamp(12px,4vh,40px) 12px;
+  background:rgba(4,3,2,.88);
+  backdrop-filter:blur(8px);
+}
+.puzzle-overlay[hidden]{display:none !important;}
+.puzzle-modal{
+  position:relative;
+  width:min(100%,1480px);
+  margin:auto;
+  padding:clamp(20px,3vw,36px);
+  border:1px solid var(--line-strong);
+  border-radius:14px;
+  background:#0c0907;
+  box-shadow:0 24px 64px rgba(0,0,0,.7),0 0 0 1px rgba(180,31,31,.08);
+}
+.puzzle-close{
+  position:absolute;
+  top:16px;
+  right:16px;
+  width:36px;
+  height:36px;
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  background:transparent;
+  color:var(--ink-dim);
+  font-size:22px;
+  cursor:pointer;
+}
+.puzzle-close:hover,.puzzle-close:focus-visible{
+  border-color:var(--crimson);
+  color:#fff;
+  background:rgba(180,31,31,.18);
+}
+.puzzle-heading{margin:0 48px 6px 0;font-family:var(--font-display);font-size:clamp(30px,4vw,46px);text-transform:uppercase;}
+.puzzle-label{display:block;margin-bottom:10px;color:var(--ink-mute);font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
+.puzzle-photos{
+  display:grid;
+  width:100%;
+  grid-template-columns:repeat(9,minmax(0,1fr));
+  align-content:start;
+  gap:8px;
+  max-height:144px;
+  margin:4px 0 8px;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-color:var(--line-strong) transparent;
+  scrollbar-width:thin;
+  padding:2px 6px 6px 2px;
+}
+.puzzle-photos::-webkit-scrollbar{width:6px;}
+.puzzle-photos::-webkit-scrollbar-thumb{border-radius:8px;background:var(--line-strong);}
+.puzzle-photos::-webkit-scrollbar-track{background:transparent;}
+.puzzle-difficulties{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px;}
+.puzzle-difficulty{
+  padding:8px 12px;
+  border:1px solid var(--line-strong);
+  border-radius:7px;
+  background:rgba(255,255,255,.025);
+  color:var(--ink-dim);
+  font-size:12px;
+  cursor:pointer;
+}
+.puzzle-difficulty:hover,.puzzle-difficulty[aria-pressed="true"]{border-color:var(--crimson-soft);background:rgba(180,31,31,.18);color:#fff;}
+.puzzle-photo{
+  position:relative;
+  overflow:hidden;
+  padding:0;
+  aspect-ratio:1.55;
+  border:2px solid var(--line-strong);
+  border-radius:8px;
+  background:#17100d;
+  cursor:pointer;
+  transition:border-color .15s,transform .15s;
+}
+.puzzle-photo:hover{transform:translateY(-2px);border-color:var(--crimson-soft);}
+.puzzle-photo[aria-pressed="true"]{border-color:var(--crimson-soft);box-shadow:0 0 0 2px rgba(217,69,69,.22);}
+.puzzle-photo img{display:block;width:100%;height:100%;object-fit:cover;}
+.puzzle-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start;}
+.puzzle-board-panel{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:flex-start;}
+.puzzle-board{
+  position:relative;
+  display:block;
+  width:100%;
+  height:clamp(440px,65vh,760px);
+  min-height:380px;
+  overflow:hidden;
+  border:1px solid rgba(236,230,220,.13);
+  border-radius:12px;
+  background:radial-gradient(ellipse at 50% 45%,#211812 0%,#17100d 72%,#100c0a 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 12px 36px rgba(0,0,0,.38);
+  touch-action:none;
+}
+.puzzle-freepieces{position:absolute;inset:0;overflow:hidden;border-radius:6px;pointer-events:none;}
+.puzzle-piece{
+  position:relative;
+  display:block;
+  width:100%;
+  aspect-ratio:var(--piece-ratio,1);
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:grab;
+  touch-action:none;
+  overflow:visible;
+  transition:filter .15s,opacity .15s;
+}
+.puzzle-piece svg{position:absolute;left:-20%;top:-20%;width:140%;height:140%;overflow:visible;filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));}
+.puzzle-piece:hover,.puzzle-piece.is-selected{filter:brightness(1.18);}
+.puzzle-piece.is-dragging{opacity:.2;}
+.puzzle-piece.is-floating{position:fixed;z-index:3000;pointer-events:none;opacity:.94;filter:drop-shadow(0 12px 18px rgba(0,0,0,.6));}
+.puzzle-piece.is-free{position:absolute;pointer-events:auto;}
+.puzzle-piece.is-floating{pointer-events:none;}
+.puzzle-freepieces .puzzle-piece{pointer-events:auto;}
+.puzzle-rack-panel{display:flex;width:100%;height:clamp(440px,65vh,760px);min-width:0;min-height:0;flex-direction:column;gap:14px;overflow:hidden;padding:16px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);}
+.puzzle-reference{flex:none;margin:0;padding:10px;border:1px solid var(--line);border-radius:9px;background:rgba(0,0,0,.2);}
+.puzzle-reference .puzzle-label{margin-bottom:8px;}
+.puzzle-reference img{display:block;width:100%;height:clamp(110px,17vh,170px);border-radius:6px;background:#17100d;object-fit:contain;}
+.puzzle-rack-area{display:flex;min-height:0;flex:1;flex-direction:column;max-height:400px;}
+.puzzle-rack-area .puzzle-label{margin-bottom:8px;}
+.puzzle-rack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 18px;min-height:0;max-height:400px;flex:1;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#51443d #17100d;scrollbar-width:thin;padding:18px 14px;}
+.puzzle-rack::-webkit-scrollbar{width:6px;}
+.puzzle-rack::-webkit-scrollbar-thumb{border-radius:8px;background:#51443d;}
+.puzzle-rack::-webkit-scrollbar-track{background:#17100d;}
+.puzzle-rack .puzzle-piece{z-index:1;}
+.puzzle-status{min-height:24px;margin:12px 0 0;color:var(--ink-dim);font-size:13px;text-align:center;}
+.puzzle-status.is-success{color:#9fe0a8;font-weight:700;}
+.puzzle-status.is-error{color:#ff9292;}
+.puzzle-restart{
+  display:block;
+  margin:16px auto 0;
+  padding:9px 16px;
+  border:1px solid var(--line-strong);
+  border-radius:7px;
+  background:rgba(180,31,31,.15);
+  color:var(--ink);
+  font-size:13px;
+  cursor:pointer;
+}
+.puzzle-restart:hover,.puzzle-restart:focus-visible{border-color:var(--crimson-soft);background:rgba(180,31,31,.3);}
+@media(max-width:700px){
+  .puzzle-photos{max-width:292px;max-height:clamp(110px,22vh,150px);grid-template-columns:repeat(3,minmax(0,1fr));}
+  .puzzle-layout{grid-template-columns:minmax(0,1fr);gap:14px;}
+  .puzzle-board{height:clamp(320px,52vh,520px);min-height:300px;}
+  .puzzle-rack-panel{display:grid;height:clamp(280px,50vh,420px);max-height:420px;grid-template-columns:minmax(110px,.75fr) minmax(0,1.25fr);grid-template-areas:"reference rack";align-items:stretch;gap:12px;padding:12px;}
+  .puzzle-reference{grid-area:reference;align-self:start;}
+  .puzzle-reference img{height:clamp(90px,18vw,140px);}
+  .puzzle-rack-area{grid-area:rack;max-height:none;}
+  .puzzle-rack{grid-template-columns:repeat(3,minmax(0,1fr));min-height:0;max-height:none;gap:28px 14px;padding:12px 8px;}
+  .puzzle-status{margin-top:8px;}
+}
+@media(max-width:380px){
+  .puzzle-modal{padding:16px;}
+  .puzzle-rack-panel{grid-template-columns:1fr;grid-template-areas:"reference" "rack";}
+  .puzzle-reference{display:grid;grid-template-columns:88px 1fr;align-items:center;gap:10px;}
+  .puzzle-reference .puzzle-label{margin:0;}
+  .puzzle-reference img{height:58px;}
+}
 </style>
 </head>
 <body>
@@ -1067,7 +1253,7 @@ footer .d{color:var(--crimson);}
   <nav class="site-nav" aria-label="Główne menu">
     <a href="#top" id="nav-regulamin">Regulamin</a>
     <a href="#" id="nav-q">Ranking</a>
-    <a href="#wkrotce" id="nav-game">???</a>
+    <a href="#wkrotce" id="nav-game">GTO 6</a>
   </nav>
   <div id="login-box">
     <a id="discord-login" href="/api/auth/discord/login">ZALOGUJ SIĘ</a>
@@ -1210,6 +1396,40 @@ footer .d{color:var(--crimson);}
     </button>
     <div class="removed-panel" id="removed-panel" hidden></div>
   </div>
+</div>
+
+<div class="puzzle-overlay" id="puzzle-overlay" hidden>
+  <section class="puzzle-modal" role="dialog" aria-modal="true" aria-labelledby="puzzle-title">
+    <button class="puzzle-close" id="puzzle-close" type="button" aria-label="Zamknij">&times;</button>
+    <h2 class="puzzle-heading" id="puzzle-title">GTO 6</h2>
+    <span class="puzzle-label" id="puzzle-photo-label">Wybierz zdjęcie</span>
+    <div class="puzzle-photos" id="puzzle-photos" role="group" aria-labelledby="puzzle-photo-label"></div>
+    <span class="puzzle-label" id="puzzle-difficulty-label">Poziom trudności</span>
+    <div class="puzzle-difficulties" id="puzzle-difficulties" role="group" aria-labelledby="puzzle-difficulty-label">
+      <button class="puzzle-difficulty" type="button" data-puzzle-size="3" aria-pressed="true">Łatwy · 3×3</button>
+      <button class="puzzle-difficulty" type="button" data-puzzle-size="4" aria-pressed="false">Średni · 4×4</button>
+      <button class="puzzle-difficulty" type="button" data-puzzle-size="5" aria-pressed="false">Trudny · 5×5</button>
+    </div>
+    <div class="puzzle-layout">
+      <div class="puzzle-board-panel">
+        <div class="puzzle-board" id="puzzle-board" role="group" aria-label="Stół do układania puzzli" tabindex="0">
+          <div class="puzzle-freepieces" id="puzzle-freepieces"></div>
+        </div>
+        <p class="puzzle-status" id="puzzle-status" role="status" aria-live="polite"></p>
+      </div>
+      <aside class="puzzle-rack-panel">
+        <figure class="puzzle-reference">
+          <figcaption class="puzzle-label" id="puzzle-reference-label">Podgląd zdjęcia</figcaption>
+          <img id="puzzle-reference-image" src="images/puzzles/gto-6-1.png" alt="Pełny podgląd zdjęcia">
+        </figure>
+        <div class="puzzle-rack-area">
+          <span class="puzzle-label" id="puzzle-pieces-label">Elementy puzzli</span>
+          <div class="puzzle-rack" id="puzzle-rack"></div>
+        </div>
+      </aside>
+    </div>
+    <button class="puzzle-restart" id="puzzle-restart" type="button">Potasuj i zacznij od nowa</button>
+  </section>
 </div>
 
 <div class="toggle-wrapper">
@@ -1399,7 +1619,7 @@ const translations = {
     login_btn: "ZALOGUJ SIĘ",
     nav_regulamin: "Regulamin",
     nav_q: "Ranking",
-    nav_game: "???",
+    nav_game: "GTO 6",
     updates_title: "Historia aktualizacji",
     update_0_1_0_1: "Dodano górne menu: Regulamin, i ???.",
     update_0_1_0_2: "Usunięto pierwszy przycisk Discorda i starą minigrę.",
@@ -1408,7 +1628,24 @@ const translations = {
     update_0_2_0_1: "Dodano możliwość głosowania + / - na uczestników.",
     update_0_2_0_2: "Dodano logowanie na serwer za pomocą Discord.",
     ranking_title: "Ranking uczestników",
-    ranking_sub: "Jeden głos co 24h — wybierz jedną osobę na + i jedną na −"
+    ranking_sub: "Jeden głos co 24h — wybierz jedną osobę na + i jedną na −",
+    puzzle_choose_photo: "Wybierz zdjęcie",
+    puzzle_difficulty: "Poziom trudności",
+    puzzle_easy: "Łatwy",
+    puzzle_medium: "Średni",
+    puzzle_hard: "Trudny",
+    puzzle_pieces: "Elementy puzzli",
+    puzzle_reference: "Podgląd zdjęcia",
+    puzzle_restart: "Potasuj i zacznij od nowa",
+    puzzle_loading: "Ładowanie zdjęcia…",
+    puzzle_progress: "Na stole: {placed}/{total} elementów. Połączone w grupy: {joined}/{total}.",
+    puzzle_outside: "Upuść element na stole, aby pozostał w grze.",
+    puzzle_success: "Brawo! Puzzle GTO 6 ułożone!",
+    puzzle_error: "Nie udało się załadować zdjęcia. Spróbuj ponownie.",
+    puzzle_photo: "Zdjęcie",
+    puzzle_title: "Stół do układania puzzli",
+    puzzle_row: "Wiersz",
+    puzzle_column: "kolumna"
   },
   ua: {
     title: "Правила — caption.gif",
@@ -1456,7 +1693,7 @@ const translations = {
     login_btn: "УВІЙТИ",
     nav_regulamin: "Правила",
     nav_q: "Рейтинг",
-    nav_game: "???",
+    nav_game: "GTO 6",
     updates_title: "Історія оновлень",
     update_0_1_0_1: "Додано верхнє меню: Правила, ???.",
     update_0_1_0_2: "Видалено першу кнопку Discord і стару мінігру.",
@@ -1465,7 +1702,24 @@ const translations = {
     update_0_2_0_1: "Додано можливість голосування + / - за учасників.",
     update_0_2_0_2: "Додано вхід на сервер через Discord.",
     ranking_title: "Рейтинг учасників",
-    ranking_sub: "Один голос кожні 24 год — обери одного учасника на + і одного на −"
+    ranking_sub: "Один голос кожні 24 год — обери одного учасника на + і одного на −",
+    puzzle_choose_photo: "Вибери фото",
+    puzzle_difficulty: "Рівень складності",
+    puzzle_easy: "Легко",
+    puzzle_medium: "Середньо",
+    puzzle_hard: "Складно",
+    puzzle_pieces: "Частини пазла",
+    puzzle_reference: "Попередній перегляд фото",
+    puzzle_restart: "Перемішати та почати знову",
+    puzzle_loading: "Завантаження фото…",
+    puzzle_progress: "На столі: {placed}/{total} частин. З'єднано в групи: {joined}/{total}.",
+    puzzle_outside: "Перетягни частину на стіл, щоб вона залишилася в грі.",
+    puzzle_success: "Вітаємо! Пазл GTO 6 складено!",
+    puzzle_error: "Не вдалося завантажити фото. Спробуй ще раз.",
+    puzzle_photo: "Фото",
+    puzzle_title: "Стіл для складання пазла",
+    puzzle_row: "Рядок",
+    puzzle_column: "стовпець"
   }
 };
 
@@ -1527,6 +1781,7 @@ function setLanguage(lang){
   const rankingSubEl = document.getElementById("ranking-sub");
   if(rankingTitleEl) rankingTitleEl.textContent = t.ranking_title;
   if(rankingSubEl) rankingSubEl.textContent = t.ranking_sub;
+  updatePuzzleLabels();
 
   if(lang === "pl"){
     plBtn.classList.add("active");
@@ -1892,8 +2147,612 @@ rankingModalClose.addEventListener("click", closeRankingModal);
 rankingOverlay.addEventListener("click", (e) => {
   if(e.target === rankingOverlay) closeRankingModal();
 });
+
+const puzzleImages = [
+  "images/puzzles/gto-6-1.png",
+  "images/puzzles/gto-6-2.png",
+  "images/puzzles/gto-6-3.png",
+  "images/puzzles/gto-6-4.png",
+  "images/puzzles/gto-6-5.png",
+  "images/puzzles/gto-6-6.png",
+  "images/puzzles/gto-6-7.png",
+  "images/puzzles/gto-6-8.png",
+  "images/puzzles/gto-6-9.png"
+];
+const puzzleTrigger = document.getElementById("nav-game");
+const puzzleOverlay = document.getElementById("puzzle-overlay");
+const puzzleClose = document.getElementById("puzzle-close");
+const puzzlePhotos = document.getElementById("puzzle-photos");
+const puzzleReference = document.getElementById("puzzle-reference-image");
+const puzzleDifficulties = document.getElementById("puzzle-difficulties");
+const puzzleBoard = document.getElementById("puzzle-board");
+const puzzleFreePieces = document.getElementById("puzzle-freepieces");
+const puzzleRack = document.getElementById("puzzle-rack");
+const puzzleStatus = document.getElementById("puzzle-status");
+let selectedPuzzlePhoto = 0;
+let selectedPuzzleSize = 3;
+let puzzlePieces = [];
+let puzzleMetrics = null;
+let puzzleGroups = new Map();
+let selectedPuzzlePiece = null;
+let puzzleHorizontalSeams = [];
+let puzzleVerticalSeams = [];
+let puzzlePieceOrder = 0;
+let puzzlePieceClipId = 0;
+let puzzleLoadToken = 0;
+let activePuzzleDrag = null;
+let puzzleFocusReturn = null;
+
+function puzzleText(key){
+  return translations[currentLang][key];
+}
+
+function updatePuzzleLabels(){
+  const values = {
+    "puzzle-photo-label": "puzzle_choose_photo",
+    "puzzle-difficulty-label": "puzzle_difficulty",
+    "puzzle-reference-label": "puzzle_reference",
+    "puzzle-pieces-label": "puzzle_pieces",
+    "puzzle-restart": "puzzle_restart"
+  };
+  for(const [id,key] of Object.entries(values)){
+    const element = document.getElementById(id);
+    if(element) element.textContent = puzzleText(key);
+  }
+  puzzlePhotos.querySelectorAll(".puzzle-photo").forEach((button,index) => {
+    button.setAttribute("aria-label", `${puzzleText("puzzle_photo")} ${index + 1}`);
+  });
+  updatePuzzlePhotoSelection();
+  puzzleDifficulties.querySelectorAll("[data-puzzle-size]").forEach(button => {
+    const size = Number(button.dataset.puzzleSize);
+    const level = size === 3 ? "puzzle_easy" : size === 4 ? "puzzle_medium" : "puzzle_hard";
+    button.textContent = `${puzzleText(level)} · ${size}×${size}`;
+    button.setAttribute("aria-pressed", String(size === selectedPuzzleSize));
+  });
+  puzzleBoard.setAttribute("aria-label", puzzleText("puzzle_title"));
+}
+
+function updatePuzzlePhotoSelection(){
+  puzzlePhotos.querySelectorAll(".puzzle-photo").forEach((button,index) => {
+    button.setAttribute("aria-pressed", String(index === selectedPuzzlePhoto));
+  });
+  puzzleReference.src = puzzleImages[selectedPuzzlePhoto];
+  puzzleReference.alt = `${puzzleText("puzzle_photo")} ${selectedPuzzlePhoto + 1} — ${puzzleText("puzzle_reference")}`;
+}
+
+function setPuzzleStatus(key, values){
+  puzzleStatus.classList.remove("is-success","is-error");
+  const substitutions = values || {};
+  puzzleStatus.textContent = puzzleText(key).replace(/\{(\w+)\}/g, (_,name) => substitutions[name] ?? "");
+  if(key === "puzzle_success") puzzleStatus.classList.add("is-success");
+  if(key === "puzzle_error" || key === "puzzle_outside") puzzleStatus.classList.add("is-error");
+}
+
+function createPuzzlePhotos(){
+  puzzleImages.forEach((src,index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "puzzle-photo";
+    button.setAttribute("aria-pressed", String(index === selectedPuzzlePhoto));
+    button.setAttribute("aria-label", `${puzzleText("puzzle_photo")} ${index + 1}`);
+    const image = document.createElement("img");
+    image.src = src;
+    image.alt = "";
+    image.loading = "lazy";
+    image.onerror = () => {
+      button.disabled = true;
+      button.setAttribute("aria-label", `${puzzleText("puzzle_photo")} ${index + 1} — niedostępne`);
+    };
+    button.append(image);
+    button.addEventListener("click", () => {
+      selectedPuzzlePhoto = index;
+      updatePuzzlePhotoSelection();
+      startPuzzle();
+    });
+    puzzlePhotos.append(button);
+  });
+}
+
+function updatePuzzleBoardSize(){
+  if(puzzleOverlay.hidden || !puzzleBoard.style.getPropertyValue("--puzzle-ratio")) return;
+  const layer = puzzleFreePieces.getBoundingClientRect();
+  if(!layer.width || !layer.height) return;
+  const ratio = Number(puzzleBoard.style.getPropertyValue("--puzzle-ratio"));
+  const width = Math.min(layer.width * 0.7,layer.height * 0.7 * ratio);
+  const height = width / ratio;
+  puzzleMetrics = {
+    width,
+    height,
+    cellWidth: width / selectedPuzzleSize,
+    cellHeight: height / selectedPuzzleSize
+  };
+  puzzlePieces.forEach((piece,index) => {
+    if(piece.parentElement !== puzzleFreePieces) return;
+    setPuzzlePiecePosition(
+      index,
+      Number(piece.dataset.x) * puzzleMetrics.cellWidth,
+      Number(piece.dataset.y) * puzzleMetrics.cellHeight
+    );
+  });
+}
+
+function setPuzzlePiecePosition(index,left,top){
+  if(!puzzleMetrics) return;
+  const layer = puzzleFreePieces.getBoundingClientRect();
+  const piece = puzzlePieces[index];
+  left = Math.max(0,Math.min(left,layer.width - puzzleMetrics.cellWidth));
+  top = Math.max(0,Math.min(top,layer.height - puzzleMetrics.cellHeight));
+  piece.style.left = `${left / layer.width * 100}%`;
+  piece.style.top = `${top / layer.height * 100}%`;
+  piece.style.width = `${puzzleMetrics.cellWidth}px`;
+  piece.style.height = `${puzzleMetrics.cellHeight}px`;
+  piece.dataset.x = String(left / puzzleMetrics.cellWidth);
+  piece.dataset.y = String(top / puzzleMetrics.cellHeight);
+}
+
+function getPuzzlePiecePosition(index){
+  const piece = puzzlePieces[index];
+  return {
+    left: Number(piece.dataset.x) * puzzleMetrics.cellWidth,
+    top: Number(piece.dataset.y) * puzzleMetrics.cellHeight
+  };
+}
+
+function getPuzzleGroupPositions(groupId){
+  const group = puzzleGroups.get(groupId);
+  if(!group) return new Map();
+  return new Map(Array.from(group,index => {
+    const piece = puzzlePieces[index];
+    return [index,{x:Number(piece.dataset.x),y:Number(piece.dataset.y)}];
+  }));
+}
+
+function movePuzzleGroup(groupId,positions,deltaX,deltaY,requireExact){
+  const group = puzzleGroups.get(groupId);
+  if(!group || !group.size || !puzzleMetrics) return null;
+  const layer = puzzleFreePieces.getBoundingClientRect();
+  const bounds = Array.from(group,index => {
+    const position = positions.get(index);
+    return {
+      index,
+      left: position.x * puzzleMetrics.cellWidth,
+      top: position.y * puzzleMetrics.cellHeight
+    };
+  });
+  const minLeft = Math.min(...bounds.map(position => position.left));
+  const minTop = Math.min(...bounds.map(position => position.top));
+  const maxRight = Math.max(...bounds.map(position => position.left + puzzleMetrics.cellWidth));
+  const maxBottom = Math.max(...bounds.map(position => position.top + puzzleMetrics.cellHeight));
+  const movedX = Math.max(-minLeft,Math.min(deltaX,layer.width - maxRight));
+  const movedY = Math.max(-minTop,Math.min(deltaY,layer.height - maxBottom));
+  if(requireExact && (Math.abs(movedX - deltaX) > 0.5 || Math.abs(movedY - deltaY) > 0.5)) return null;
+  bounds.forEach(position => {
+    setPuzzlePiecePosition(position.index,position.left + movedX,position.top + movedY);
+  });
+  return {x:movedX,y:movedY};
+}
+
+function randomPuzzleSeams(rows,columns){
+  const randomSign = () => Math.random() < 0.5 ? -1 : 1;
+  puzzleHorizontalSeams = Array.from({length:rows - 1},() => Array.from({length:columns},randomSign));
+  puzzleVerticalSeams = Array.from({length:rows},() => Array.from({length:columns - 1},randomSign));
+}
+
+function horizontalPuzzleEdge(x,y,direction,normal,sign){
+  const end = x + direction * 100;
+  if(!sign) return `L ${end} ${y}`;
+  const bump = normal * sign * 18;
+  return `L ${x + direction * 34} ${y} C ${x + direction * 42} ${y} ${x + direction * 40} ${y + bump} ${x + direction * 50} ${y + bump} C ${x + direction * 60} ${y + bump} ${x + direction * 58} ${y} ${x + direction * 66} ${y} L ${end} ${y}`;
+}
+
+function verticalPuzzleEdge(x,y,direction,normal,sign){
+  const end = y + direction * 100;
+  if(!sign) return `L ${x} ${end}`;
+  const bump = normal * sign * 18;
+  return `L ${x} ${y + direction * 34} C ${x} ${y + direction * 42} ${x + bump} ${y + direction * 40} ${x + bump} ${y + direction * 50} C ${x + bump} ${y + direction * 60} ${x} ${y + direction * 58} ${x} ${y + direction * 66} L ${x} ${end}`;
+}
+
+function puzzlePiecePath(row,column){
+  const top = row === 0 ? 0 : -puzzleHorizontalSeams[row - 1][column];
+  const right = column === selectedPuzzleSize - 1 ? 0 : puzzleVerticalSeams[row][column];
+  const bottom = row === selectedPuzzleSize - 1 ? 0 : puzzleHorizontalSeams[row][column];
+  const left = column === 0 ? 0 : -puzzleVerticalSeams[row][column - 1];
+  return `M 0 0 ${horizontalPuzzleEdge(0,0,1,-1,top)} ${verticalPuzzleEdge(100,0,1,1,right)} ${horizontalPuzzleEdge(100,100,-1,1,bottom)} ${verticalPuzzleEdge(0,100,-1,-1,left)} Z`;
+}
+
+function makePuzzlePieceImage(row,column){
+  const namespace = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(namespace,"svg");
+  const clipId = `puzzle-piece-clip-${puzzlePieceClipId++}`;
+  const path = puzzlePiecePath(row,column);
+  svg.setAttribute("viewBox","-20 -20 140 140");
+  svg.setAttribute("preserveAspectRatio","none");
+  svg.setAttribute("aria-hidden","true");
+
+  const definitions = document.createElementNS(namespace,"defs");
+  const clip = document.createElementNS(namespace,"clipPath");
+  clip.setAttribute("id",clipId);
+  clip.setAttribute("clipPathUnits","userSpaceOnUse");
+  const clipShape = document.createElementNS(namespace,"path");
+  clipShape.setAttribute("d",path);
+  clip.append(clipShape);
+  definitions.append(clip);
+
+  const image = document.createElementNS(namespace,"image");
+  image.setAttribute("href",puzzleImages[selectedPuzzlePhoto]);
+  image.setAttribute("x",String(-column * 100));
+  image.setAttribute("y",String(-row * 100));
+  image.setAttribute("width",String(selectedPuzzleSize * 100));
+  image.setAttribute("height",String(selectedPuzzleSize * 100));
+  image.setAttribute("preserveAspectRatio","none");
+  image.setAttribute("clip-path",`url(#${clipId})`);
+
+  const outline = document.createElementNS(namespace,"path");
+  outline.setAttribute("d",path);
+  outline.setAttribute("fill","none");
+  outline.setAttribute("stroke","rgba(255,255,255,.55)");
+  outline.setAttribute("stroke-width","1.5");
+  outline.setAttribute("pointer-events","none");
+  svg.append(definitions,image,outline);
+  return svg;
+}
+
+function renderPuzzle(){
+  puzzleBoard.replaceChildren(puzzleFreePieces);
+  puzzleRack.replaceChildren();
+  puzzleFreePieces.replaceChildren();
+  puzzleRack.style.gridTemplateColumns = "repeat(3,minmax(0,1fr))";
+  const total = selectedPuzzleSize * selectedPuzzleSize;
+  randomPuzzleSeams(selectedPuzzleSize,selectedPuzzleSize);
+  puzzlePieces = Array.from({length:total},(_,index) => {
+    const row = Math.floor(index / selectedPuzzleSize);
+    const column = index % selectedPuzzleSize;
+    const piece = document.createElement("button");
+    piece.type = "button";
+    piece.className = "puzzle-piece";
+    piece.dataset.puzzlePiece = String(index);
+    piece.setAttribute("aria-label", `${puzzleText("puzzle_pieces")} ${index + 1}`);
+    piece.append(makePuzzlePieceImage(row,column));
+    piece.addEventListener("click",event => {
+      event.stopPropagation();
+      selectPuzzlePiece(index);
+    });
+    piece.addEventListener("pointerdown", event => beginPuzzleDrag(event,index));
+    return piece;
+  });
+  puzzleGroups = new Map(puzzlePieces.map((piece,index) => {
+    piece.dataset.group = String(index);
+    return [String(index),new Set([index])];
+  }));
+
+  const order = Array.from({length:total},(_,index) => index);
+  for(let index = order.length - 1; index > 0; index--){
+    const swap = Math.floor(Math.random() * (index + 1));
+    [order[index],order[swap]] = [order[swap],order[index]];
+  }
+  order.forEach(index => puzzleRack.append(puzzlePieces[index]));
+  selectedPuzzlePiece = null;
+  setPuzzleStatus("puzzle_progress",{placed:0,total,joined:0});
+  updatePuzzleBoardSize();
+}
+
+function cancelPuzzleDrag(){
+  if(!activePuzzleDrag) return;
+  activePuzzleDrag.floating.remove();
+  activePuzzleDrag.piece.classList.remove("is-dragging");
+  activePuzzleDrag = null;
+}
+
+async function startPuzzle(){
+  cancelPuzzleDrag();
+  const loadToken = ++puzzleLoadToken;
+  setPuzzleStatus("puzzle_loading");
+  const image = new Image();
+  image.src = puzzleImages[selectedPuzzlePhoto];
+  try{
+    if(image.complete){
+      if(!image.naturalWidth) throw new Error("Image failed to load");
+    }else{
+      await new Promise((resolve,reject) => {
+        image.onload = resolve;
+        image.onerror = () => reject(new Error("Image failed to load"));
+      });
+    }
+    if(loadToken !== puzzleLoadToken) return;
+    puzzleBoard.style.setProperty("--puzzle-ratio", String(image.naturalWidth / image.naturalHeight));
+    puzzleOverlay.style.setProperty("--puzzle-ratio", String(image.naturalWidth / image.naturalHeight));
+    puzzleOverlay.style.setProperty("--piece-ratio", String(image.naturalWidth / image.naturalHeight));
+    renderPuzzle();
+  }catch(error){
+    if(loadToken !== puzzleLoadToken) return;
+    console.error("Nie udało się załadować zdjęcia do puzzli:",error);
+    puzzleBoard.replaceChildren();
+    puzzleRack.replaceChildren();
+    setPuzzleStatus("puzzle_error");
+  }
+}
+
+function selectPuzzlePiece(index){
+  if(!puzzlePieces[index] || puzzlePieces[index].disabled) return;
+  selectedPuzzlePiece = index;
+  puzzlePieces.forEach((piece,pieceIndex) => piece.classList.toggle("is-selected",pieceIndex === index));
+}
+
+function updatePuzzleProgress(){
+  const placed = puzzlePieces.filter(piece => piece.parentElement === puzzleFreePieces).length;
+  const joined = Array.from(puzzleGroups.values())
+    .filter(group => group.size > 1)
+    .reduce((count,group) => count + group.size,0);
+  if(puzzleGroups.size === 1 && puzzleGroups.values().next().value.size === puzzlePieces.length){
+    setPuzzleStatus("puzzle_success");
+    return;
+  }
+  setPuzzleStatus("puzzle_progress",{placed,total:puzzlePieces.length,joined});
+}
+
+function getPuzzleNeighborOffset(index,otherIndex){
+  const row = Math.floor(index / selectedPuzzleSize);
+  const column = index % selectedPuzzleSize;
+  const otherRow = Math.floor(otherIndex / selectedPuzzleSize);
+  const otherColumn = otherIndex % selectedPuzzleSize;
+  const rowDelta = otherRow - row;
+  const columnDelta = otherColumn - column;
+  if(rowDelta === 0 && Math.abs(columnDelta) === 1){
+    return {x:columnDelta * puzzleMetrics.cellWidth,y:0};
+  }
+  if(columnDelta === 0 && Math.abs(rowDelta) === 1){
+    return {x:0,y:rowDelta * puzzleMetrics.cellHeight};
+  }
+  return null;
+}
+
+function tryJoinPuzzleGroup(groupId){
+  let joined = false;
+  const tolerance = 30;
+  while(puzzleGroups.has(groupId)){
+    const movingGroup = puzzleGroups.get(groupId);
+    const candidates = [];
+    movingGroup.forEach(index => {
+      if(puzzlePieces[index].parentElement !== puzzleFreePieces) return;
+      const piecePosition = getPuzzlePiecePosition(index);
+      puzzlePieces.forEach((otherPiece,otherIndex) => {
+        if(otherPiece.parentElement !== puzzleFreePieces || otherPiece.dataset.group === groupId) return;
+        const offset = getPuzzleNeighborOffset(index,otherIndex);
+        if(!offset) return;
+        const otherPosition = getPuzzlePiecePosition(otherIndex);
+        const x = otherPosition.left - piecePosition.left - offset.x;
+        const y = otherPosition.top - piecePosition.top - offset.y;
+        const distance = Math.hypot(x,y);
+        if(distance <= tolerance){
+          candidates.push({distance,x,y,otherGroupId:otherPiece.dataset.group});
+        }
+      });
+    });
+    candidates.sort((a,b) => a.distance - b.distance);
+    let merged = false;
+    for(const candidate of candidates){
+      const positions = getPuzzleGroupPositions(groupId);
+      const movement = movePuzzleGroup(groupId,positions,candidate.x,candidate.y,true);
+      if(!movement) continue;
+      const group = puzzleGroups.get(groupId);
+      const otherGroup = puzzleGroups.get(candidate.otherGroupId);
+      if(!otherGroup) continue;
+      otherGroup.forEach(index => {
+        group.add(index);
+        puzzlePieces[index].dataset.group = groupId;
+      });
+      puzzleGroups.delete(candidate.otherGroupId);
+      joined = true;
+      merged = true;
+      break;
+    }
+    if(!merged) break;
+  }
+  return joined;
+}
+
+function placePuzzlePiece(index,left,top){
+  if(!puzzleMetrics) return;
+  const piece = puzzlePieces[index];
+  const groupId = piece.dataset.group;
+  setPuzzlePiecePosition(index,left,top);
+  piece.classList.remove("is-selected");
+  piece.classList.add("is-free");
+  piece.style.zIndex = String(++puzzlePieceOrder);
+  puzzleFreePieces.append(piece);
+  selectedPuzzlePiece = null;
+  puzzlePieces.forEach(piece => piece.classList.remove("is-selected"));
+  tryJoinPuzzleGroup(groupId);
+  updatePuzzleProgress();
+}
+
+function moveSelectedPuzzlePiece(left,top){
+  if(selectedPuzzlePiece === null) return;
+  const index = selectedPuzzlePiece;
+  const piece = puzzlePieces[index];
+  if(piece.parentElement === puzzleRack){
+    placePuzzlePiece(index,left,top);
+    return;
+  }
+  const groupId = piece.dataset.group;
+  const position = getPuzzlePiecePosition(index);
+  movePuzzleGroup(
+    groupId,
+    getPuzzleGroupPositions(groupId),
+    left - position.left,
+    top - position.top
+  );
+  puzzlePieces.forEach(piece => piece.classList.remove("is-selected"));
+  selectedPuzzlePiece = null;
+  tryJoinPuzzleGroup(groupId);
+  updatePuzzleProgress();
+}
+
+function beginPuzzleDrag(event,index){
+  if(event.button !== 0 || puzzlePieces[index].disabled) return;
+  event.preventDefault();
+  if(selectedPuzzlePiece !== null){
+    puzzlePieces[selectedPuzzlePiece].classList.remove("is-selected");
+    selectedPuzzlePiece = null;
+  }
+  const piece = puzzlePieces[index];
+  piece.setPointerCapture(event.pointerId);
+  const bounds = piece.getBoundingClientRect();
+  const anchorX = (event.clientX - bounds.left) / bounds.width;
+  const anchorY = (event.clientY - bounds.top) / bounds.height;
+  const width = puzzleMetrics.cellWidth;
+  const height = puzzleMetrics.cellHeight;
+  const wasInRack = piece.parentElement === puzzleRack;
+  const groupId = piece.dataset.group;
+  const groupPositions = wasInRack ? null : getPuzzleGroupPositions(groupId);
+  const startPosition = wasInRack ? null : getPuzzlePiecePosition(index);
+  const floating = piece.cloneNode(true);
+  const ghostClipId = `puzzle-piece-drag-${puzzlePieceClipId++}`;
+  floating.querySelector("clipPath").id = ghostClipId;
+  floating.querySelector("image").setAttribute("clip-path",`url(#${ghostClipId})`);
+  floating.classList.remove("is-free","is-selected","is-dragging");
+  floating.classList.add("is-floating");
+  floating.style.left = `${event.clientX - anchorX * width}px`;
+  floating.style.top = `${event.clientY - anchorY * height}px`;
+  floating.style.width = `${width}px`;
+  floating.style.height = `${height}px`;
+  document.body.append(floating);
+  piece.classList.add("is-dragging");
+  activePuzzleDrag = {
+    index,
+    piece,
+    floating,
+    anchorX,
+    anchorY,
+    startX: event.clientX,
+    startY: event.clientY,
+    pointerId: event.pointerId,
+    wasInRack,
+    groupId,
+    groupPositions,
+    startPosition,
+    moved: false
+  };
+}
+
+document.addEventListener("pointermove",event => {
+  if(!activePuzzleDrag || event.pointerId !== activePuzzleDrag.pointerId) return;
+  const drag = activePuzzleDrag;
+  if(Math.hypot(event.clientX - drag.startX,event.clientY - drag.startY) > 4) drag.moved = true;
+  const width = puzzleMetrics.cellWidth;
+  const height = puzzleMetrics.cellHeight;
+  drag.floating.style.width = `${width}px`;
+  drag.floating.style.height = `${height}px`;
+  if(drag.wasInRack){
+    drag.floating.style.left = `${event.clientX - drag.anchorX * width}px`;
+    drag.floating.style.top = `${event.clientY - drag.anchorY * height}px`;
+  }else{
+    const layer = puzzleFreePieces.getBoundingClientRect();
+    const left = event.clientX - drag.anchorX * width - layer.left;
+    const top = event.clientY - drag.anchorY * height - layer.top;
+    movePuzzleGroup(
+      drag.groupId,
+      drag.groupPositions,
+      left - drag.startPosition.left,
+      top - drag.startPosition.top
+    );
+    const position = getPuzzlePiecePosition(drag.index);
+    drag.floating.style.left = `${layer.left + position.left}px`;
+    drag.floating.style.top = `${layer.top + position.top}px`;
+  }
+});
+
+function finishPuzzleDrag(event){
+  if(!activePuzzleDrag || event.pointerId !== activePuzzleDrag.pointerId) return;
+  const drag = activePuzzleDrag;
+  activePuzzleDrag = null;
+  drag.floating.remove();
+  drag.piece.classList.remove("is-dragging");
+  if(drag.moved){
+    const layerBounds = puzzleFreePieces.getBoundingClientRect();
+    const cellWidth = puzzleMetrics.cellWidth;
+    const cellHeight = puzzleMetrics.cellHeight;
+    const left = event.clientX - drag.anchorX * cellWidth - layerBounds.left;
+    const top = event.clientY - drag.anchorY * cellHeight - layerBounds.top;
+    const centerX = left + cellWidth / 2;
+    const centerY = top + cellHeight / 2;
+    if(centerX >= 0 && centerX <= layerBounds.width && centerY >= 0 && centerY <= layerBounds.height){
+      if(drag.wasInRack){
+        placePuzzlePiece(drag.index,left,top);
+      }else{
+        movePuzzleGroup(
+          drag.groupId,
+          drag.groupPositions,
+          left - drag.startPosition.left,
+          top - drag.startPosition.top
+        );
+        tryJoinPuzzleGroup(drag.groupId);
+        updatePuzzleProgress();
+      }
+    }else if(drag.wasInRack){
+      setPuzzleStatus("puzzle_outside");
+    }
+  }else{
+    selectPuzzlePiece(drag.index);
+  }
+}
+
+document.addEventListener("pointerup",finishPuzzleDrag);
+document.addEventListener("pointercancel",finishPuzzleDrag);
+
+function openPuzzle(){
+  puzzleFocusReturn = document.activeElement;
+  puzzleOverlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  updatePuzzlePhotoSelection();
+  startPuzzle();
+  puzzleClose.focus();
+}
+
+function closePuzzle(){
+  cancelPuzzleDrag();
+  puzzleOverlay.hidden = true;
+  document.body.style.overflow = "";
+  if(puzzleFocusReturn && typeof puzzleFocusReturn.focus === "function") puzzleFocusReturn.focus();
+}
+
+createPuzzlePhotos();
+puzzleDifficulties.addEventListener("click",event => {
+  const button = event.target.closest("[data-puzzle-size]");
+  if(!button) return;
+  selectedPuzzleSize = Number(button.dataset.puzzleSize);
+  updatePuzzleLabels();
+  startPuzzle();
+});
+puzzleBoard.addEventListener("click",event => {
+  if(selectedPuzzlePiece === null || event.target.closest(".puzzle-piece")) return;
+  const layer = puzzleFreePieces.getBoundingClientRect();
+  const left = Math.max(0,Math.min(event.clientX - layer.left - puzzleMetrics.cellWidth / 2,layer.width - puzzleMetrics.cellWidth));
+  const top = Math.max(0,Math.min(event.clientY - layer.top - puzzleMetrics.cellHeight / 2,layer.height - puzzleMetrics.cellHeight));
+  moveSelectedPuzzlePiece(left,top);
+});
+puzzleBoard.addEventListener("keydown",event => {
+  if(selectedPuzzlePiece === null || (event.key !== "Enter" && event.key !== " ")) return;
+  event.preventDefault();
+  const layer = puzzleFreePieces.getBoundingClientRect();
+  moveSelectedPuzzlePiece(
+    (layer.width - puzzleMetrics.cellWidth) / 2,
+    (layer.height - puzzleMetrics.cellHeight) / 2
+  );
+});
+puzzleTrigger.addEventListener("click",event => {
+  event.preventDefault();
+  openPuzzle();
+});
+puzzleClose.addEventListener("click",closePuzzle);
+puzzleOverlay.addEventListener("click",event => {
+  if(event.target === puzzleOverlay) closePuzzle();
+});
+document.getElementById("puzzle-restart").addEventListener("click",startPuzzle);
+window.addEventListener("resize",updatePuzzleBoardSize);
 document.addEventListener("keydown", (e) => {
   if(e.key === "Escape" && !rankingOverlay.hidden) closeRankingModal();
+  if(e.key === "Escape" && !puzzleOverlay.hidden) closePuzzle();
 });
 
 setLanguage("pl");
